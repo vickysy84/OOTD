@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
     <item
-        android:id="@+id/menu_new"
-        android:icon="@drawable/ic_action_new"
-        android:title="@string/action_new"
+        android:id="@+id/menu_edit"
+        android:title="@string/action_edit"
         support:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/menu_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/menu_delete"
+        android:title="@string/action_delete"
         android:orderInCategory="100"
         support:showAsAction="never" />
 </menu>

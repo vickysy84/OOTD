@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="item_types">
+        <item>@string/top</item>
+        <item>@string/pants</item>
+        <item>@string/skirt</item>
+        <item>@string/pants</item>
+        <item>@string/dress</item>
+        <item>@string/gown</item>
+        <item>@string/shawl</item>
+        <item>@string/coat</item>
+        <item>@string/jacket</item>
+        <item>@string/footwear</item>
+        <item>@string/sportswear</item>
+        <item>@string/hosiery</item>
+    </string-array>
+</resources>

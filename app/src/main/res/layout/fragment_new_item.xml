@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:useDefaultMargins="true"
+    android:alignmentMode="alignBounds"
+    android:columnOrderPreserved="false"
+
+    android:columnCount="4"
+    >
+
+    <TextView
+        android:text="New Item"
+        android:textSize="32dip"
+
+        android:layout_columnSpan="4"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:text="Item Type:"
+
+        android:layout_gravity="right"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_type_spinner" />
+
+    <TextView
+        android:text="Brand:"
+
+        android:layout_column="0"
+        android:layout_gravity="right"
+        />
+
+    <EditText
+        android:ems="8"
+        />
+
+    <TextView
+        android:text="Date Purchased:"
+
+        android:layout_column="0"
+        android:layout_gravity="right"
+        />
+
+    <EditText
+        android:ems="8"
+        />
+
+    <TextView
+        android:text="Condition:"
+
+        android:layout_column="0"
+        android:layout_gravity="right"
+        />
+
+    <EditText
+        android:ems="8"
+        />
+
+    <TextView
+        android:text="Color:"
+
+        android:layout_column="0"
+        android:layout_gravity="right"
+        />
+
+    <EditText
+        android:ems="8"
+        />
+
+    <TextView
+        android:text="Material:"
+
+        android:layout_column="0"
+        android:layout_gravity="right"
+        />
+
+    <EditText
+        android:ems="8"
+        />
+
+
+
+    <Button
+        android:text="Submit"
+        android:layout_row="9"
+        android:layout_column="3"
+        android:id="@+id/submit"
+        />
+</GridLayout>
