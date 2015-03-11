@@ -42,9 +42,6 @@ public class OOTDContract {
         // Table name
         public static final String TABLE_NAME = "item";
 
-        // The item id.
-        public static final String COLUMN_ITEM_KEY = "item_id";
-
         // The item type.
         public static final String COLUMN_ITEM_TYPE = "item_type";
 
@@ -64,7 +61,7 @@ public class OOTDContract {
             return CONTENT_URI;
         }
 
-        public static Uri buildInsertItemUri(long id) {
+        public static Uri buildItemUriWithId(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }

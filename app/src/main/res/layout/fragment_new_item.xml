@@ -15,7 +15,7 @@
     <TextView
         android:text="New Item"
         android:textSize="32dip"
-
+        android:id="@+id/frame_title_view"
         android:layout_columnSpan="4"
         android:layout_gravity="center_horizontal"
         />

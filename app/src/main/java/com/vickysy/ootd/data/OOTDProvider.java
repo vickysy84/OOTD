@@ -120,7 +120,7 @@ public class OOTDProvider extends ContentProvider {
             case ITEM: {
                 long _id = db.insert(OOTDContract.ItemEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
-                    returnUri = OOTDContract.ItemEntry.buildInsertItemUri(_id);
+                    returnUri = OOTDContract.ItemEntry.buildItemUriWithId(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
@@ -141,12 +141,14 @@ public class OOTDProvider extends ContentProvider {
         if ( null == selection ) selection = "1";
         switch (match) {
             case ITEM:
+
                 rowsDeleted = db.delete(
                         OOTDContract.ItemEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
+
         // Because a null deletes all rows
         if (rowsDeleted != 0) {
             getContext().getContentResolver().notifyChange(uri, null);

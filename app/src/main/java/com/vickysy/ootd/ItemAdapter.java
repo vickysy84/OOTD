@@ -72,6 +72,7 @@ public class ItemAdapter extends CursorAdapter {
 
         // Read date from cursor
         String itemType = cursor.getString(ItemFragment.COL_ITEM_TYPE);
+
         // Find TextView and set formatted date on it
         viewHolder.itemTypeView.setText(itemType);
     }

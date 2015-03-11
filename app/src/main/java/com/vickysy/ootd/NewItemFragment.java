@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.vickysy.ootd.data.OOTDContract;
 
@@ -26,14 +27,17 @@ public class NewItemFragment extends Fragment implements View.OnClickListener{
 
     private static final int ITEM_LOADER = 0;
 
+    static final int NEW_ITEM = 0;
+    static final int EDIT_ITEM = 1;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ACTION = "action";
+    private static final String ID = "id";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int action;
+    private long id;
 
     // Form elements
     private Spinner itemTypeSpinner;
@@ -42,18 +46,18 @@ public class NewItemFragment extends Fragment implements View.OnClickListener{
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param action Parameter 1.
+     * @param id Parameter 2.
      * @return A new instance of fragment NewItemFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NewItemFragment newInstance(String param1, String param2) {
+    public static NewItemFragment newInstance(int action, long id) {
         NewItemFragment fragment = new NewItemFragment();
 
         Bundle arguments = new Bundle();
         arguments.putParcelable(NewItemFragment.ITEM_URI, OOTDContract.ItemEntry.buildItemUri());
-        arguments.putString(ARG_PARAM1, param1);
-        arguments.putString(ARG_PARAM2, param2);
+        arguments.putInt(ACTION, action);
+        arguments.putLong(ID, id);
         fragment.setArguments(arguments);
 
         return fragment;
@@ -65,10 +69,11 @@ public class NewItemFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            action = getArguments().getInt(ACTION);
+            id = getArguments().getLong(ID);
         }
     }
 
@@ -79,10 +84,14 @@ public class NewItemFragment extends Fragment implements View.OnClickListener{
         Bundle arguments = getArguments();
         if (arguments != null) {
             mUri = arguments.getParcelable(NewItemFragment.ITEM_URI);
+            action = arguments.getInt(NewItemFragment.ACTION);
+            id = arguments.getLong(NewItemFragment.ID);
         }
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_new_item, container, false);
+
+        TextView frameTitleView = (TextView) rootView.findViewById(R.id.frame_title_view);
 
         itemTypeSpinner = (Spinner) rootView.findViewById(R.id.item_type_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -95,6 +104,16 @@ public class NewItemFragment extends Fragment implements View.OnClickListener{
 
         Button submitButton = (Button) rootView.findViewById(R.id.submit);
         submitButton.setOnClickListener(this);
+
+        switch (action) {
+            case NEW_ITEM: submitButton.setText("Submit");
+                frameTitleView.setText("New Item");
+                break;
+            case EDIT_ITEM: submitButton.setText("Save");
+                frameTitleView.setText("Edit Item");
+                break;
+        }
+
         return rootView;
     }
 
@@ -102,12 +121,21 @@ public class NewItemFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         Uri uri = mUri;
         if (null != uri) {
-            InsertItemTask iit = new InsertItemTask(getActivity());
-            long itemId = iit.addItem(itemTypeSpinner.getSelectedItem().toString());
-            Intent intentMessage=new Intent();
-            intentMessage.putExtra("MESSAGE","Success");
-            getActivity().setResult(2, intentMessage);
-            getActivity().finish();
+            ItemTask iTask = new ItemTask(getActivity());
+            switch (action) {
+                case NEW_ITEM : long itemId = iTask.addItem(itemTypeSpinner.getSelectedItem().toString());
+                                Intent intentMessage = new Intent();
+                                intentMessage.putExtra("MESSAGE", "Success");
+                                getActivity().setResult(2, intentMessage);
+                                getActivity().finish();
+                    break;
+                case EDIT_ITEM : int count = iTask.editItem(id, itemTypeSpinner.getSelectedItem().toString());
+                                Intent intentMessage2 = new Intent();
+                                intentMessage2.putExtra("MESSAGE", "Success");
+                                getActivity().setResult(2, intentMessage2);
+                                getActivity().finish();
+                    break;
+            }
         }
     }
 }

@@ -48,6 +48,7 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
 
     // These indices are tied to ITEM_COLUMNS.  If ITEMS_COLUMNS changes, these
     // must change.
+    static final int COL_ITEM_ID = 0;
     static final int COL_ITEM_TYPE = 1;
 
     /**
@@ -101,16 +102,6 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
                 mPosition = position;
             }
         });
-        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
-        {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View v,
-                                           int position, long id) {
-                return false;
-            }
-
-        });
 
         // If there's instance state, mine it for useful information.
         // The end-goal here is that the user never knows that turning their device sideways
@@ -125,32 +116,9 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
 
         mItemAdapter.setUseGridLayout(mUseGridLayout);
 
+
         return rootView;
     }
-
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v,
-//                                    ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        MenuInflater inflater = getActivity().getMenuInflater();
-//        inflater.inflate(R.menu.menu_item_long_click, menu);
-//    }
-//
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//        AdapterViewCompat.AdapterContextMenuInfo info = (AdapterViewCompat.AdapterContextMenuInfo) item.getMenuInfo();
-////        switch (item.getItemId()) {
-////            case R.id.edit:
-////               // editNote(info.id);
-////                return true;
-////            case R.id.delete:
-////               // deleteNote(info.id);
-////                return true;
-////            default:
-////                return super.onContextItemSelected(item);
-////        }
-//        return true;
-//    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

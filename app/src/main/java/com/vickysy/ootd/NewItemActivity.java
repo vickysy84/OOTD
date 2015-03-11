@@ -1,5 +1,6 @@
 package com.vickysy.ootd;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -16,9 +17,15 @@ public class NewItemActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-
-            NewItemFragment fragment = NewItemFragment.newInstance("","");
-
+            Intent intent = getIntent();
+            Bundle extras = intent.getExtras();
+            long id = 0;
+            int mode = 0;
+            if (extras != null) {
+                mode = extras.getInt("mode");
+                id = extras.getLong("id");
+            }
+            NewItemFragment fragment = NewItemFragment.newInstance(mode,id);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, fragment)
                     .commit();
