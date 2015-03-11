@@ -43,13 +43,15 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
             // using the location set by the user, which is only in the Location table.
             // So the convenience is worth it.
             OOTDContract.ItemEntry.TABLE_NAME + "." + OOTDContract.ItemEntry._ID,
-            OOTDContract.ItemEntry.COLUMN_ITEM_TYPE
+            OOTDContract.ItemEntry.COLUMN_ITEM_TYPE,
+            OOTDContract.ItemEntry.COLUMN_IMG_PATH
     };
 
     // These indices are tied to ITEM_COLUMNS.  If ITEMS_COLUMNS changes, these
     // must change.
     static final int COL_ITEM_ID = 0;
     static final int COL_ITEM_TYPE = 1;
+    static final int COL_IMG_PATH = 2;
 
     /**
      * A callback interface that all activities containing this fragment must

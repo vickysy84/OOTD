@@ -30,7 +30,6 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         registerForContextMenu(gridView);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -73,13 +72,12 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-
-        // check if the request code is same as what is passed  here it is 2
         if(requestCode == NEW_ITEM)
         {
+            // new item success
 
+            //this.sendBroadcast(data);
         }
-
     }
 
     @Override
@@ -89,6 +87,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_item_long_click, menu);
     }
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();

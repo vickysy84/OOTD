@@ -25,7 +25,8 @@ public class OOTDDbHelper extends SQLiteOpenHelper {
         // Create a table to hold items.
         final String SQL_CREATE_ITEM_TABLE = "CREATE TABLE " + ItemEntry.TABLE_NAME + " (" +
                 ItemEntry._ID + " INTEGER PRIMARY KEY," +
-                ItemEntry.COLUMN_ITEM_TYPE + " TEXT NOT NULL" +
+                ItemEntry.COLUMN_ITEM_TYPE + " TEXT NOT NULL ," +
+                ItemEntry.COLUMN_IMG_PATH + " TEXT NOT NULL " +
                 " );";
 
         db.execSQL(SQL_CREATE_ITEM_TABLE);

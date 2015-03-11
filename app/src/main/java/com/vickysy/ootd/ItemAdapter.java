@@ -2,10 +2,13 @@ package com.vickysy.ootd;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -26,10 +29,12 @@ public class ItemAdapter extends CursorAdapter {
     public static class ViewHolder {
         //public final ImageView iconView;
         public final TextView itemTypeView;
+        public final ImageView imagePathView;
 
         public ViewHolder(View view) {
            // iconView = (ImageView) view.findViewById(R.id.list_item_icon);
             itemTypeView = (TextView) view.findViewById(R.id.list_item_type_view);
+            imagePathView = (ImageView) view.findViewById(R.id.thumbnailImageView);
         }
     }
 
@@ -70,11 +75,13 @@ public class ItemAdapter extends CursorAdapter {
             }
         }
 
-        // Read date from cursor
         String itemType = cursor.getString(ItemFragment.COL_ITEM_TYPE);
-
-        // Find TextView and set formatted date on it
         viewHolder.itemTypeView.setText(itemType);
+
+        // Read image path from cursor
+        String imgPath = cursor.getString(ItemFragment.COL_IMG_PATH);
+        Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+		viewHolder.imagePathView.setImageBitmap(bitmap);
     }
 
     public void setUseGridLayout(boolean useGridLayout){

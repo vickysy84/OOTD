@@ -9,89 +9,109 @@
     android:alignmentMode="alignBounds"
     android:columnOrderPreserved="false"
 
-    android:columnCount="4"
+    android:columnCount="5"
     >
 
     <TextView
         android:text="New Item"
         android:textSize="32dip"
         android:id="@+id/frame_title_view"
-        android:layout_columnSpan="4"
+        android:layout_columnSpan="5"
         android:layout_gravity="center_horizontal"
-        />
+        android:layout_row="0"
+        android:layout_column="0" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_row="1"
+        android:layout_column="1"
+        android:visibility="visible"
+        android:minHeight="100dp"
+        android:minWidth="100dp"/>
 
     <TextView
         android:text="Item Type:"
 
         android:layout_gravity="right"
-        />
+        android:layout_row="2"
+        android:layout_column="0" />
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/item_type_spinner" />
+        android:id="@+id/item_type_spinner"
+        android:layout_row="2"
+        android:layout_column="2" />
 
     <TextView
         android:text="Brand:"
 
         android:layout_column="0"
         android:layout_gravity="right"
-        />
+        android:layout_row="3" />
 
     <EditText
         android:ems="8"
-        />
+        android:layout_row="3"
+        android:layout_column="2" />
 
     <TextView
         android:text="Date Purchased:"
 
         android:layout_column="0"
         android:layout_gravity="right"
-        />
+        android:layout_row="4" />
 
     <EditText
         android:ems="8"
-        />
+        android:layout_row="4"
+        android:layout_column="2" />
 
     <TextView
         android:text="Condition:"
 
         android:layout_column="0"
         android:layout_gravity="right"
-        />
+        android:layout_row="5" />
 
     <EditText
         android:ems="8"
-        />
+        android:layout_row="5"
+        android:layout_column="2" />
 
     <TextView
         android:text="Color:"
 
         android:layout_column="0"
         android:layout_gravity="right"
-        />
+        android:layout_row="6" />
 
     <EditText
         android:ems="8"
-        />
+        android:layout_row="6"
+        android:layout_column="2" />
 
     <TextView
         android:text="Material:"
 
         android:layout_column="0"
         android:layout_gravity="right"
-        />
+        android:layout_row="7" />
 
     <EditText
         android:ems="8"
-        />
+        android:layout_row="7"
+        android:layout_column="2" />
 
 
 
     <Button
         android:text="Submit"
         android:layout_row="9"
-        android:layout_column="3"
+        android:layout_column="4"
         android:id="@+id/submit"
         />
 </GridLayout>

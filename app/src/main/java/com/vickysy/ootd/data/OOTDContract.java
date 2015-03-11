@@ -45,6 +45,8 @@ public class OOTDContract {
         // The item type.
         public static final String COLUMN_ITEM_TYPE = "item_type";
 
+        public static final String COLUMN_IMG_PATH = "img_path";
+
         // The brand of the item
         public static final String COLUMN_BRAND = "brand";
 

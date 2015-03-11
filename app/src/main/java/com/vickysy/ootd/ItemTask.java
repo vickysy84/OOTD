@@ -29,10 +29,11 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
      * @param itemType
      * @return the row ID of the added item.
      */
-    long addItem(String itemType) {
+    long addItem(String itemType, String imagePath) {
         long itemId;
         ContentValues itemValues = new ContentValues();
         itemValues.put(OOTDContract.ItemEntry.COLUMN_ITEM_TYPE, itemType);
+        itemValues.put(OOTDContract.ItemEntry.COLUMN_IMG_PATH, imagePath);
         Uri insertedUri = mContext.getContentResolver().insert(
                 OOTDContract.ItemEntry.CONTENT_URI,
                 itemValues
