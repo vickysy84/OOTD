@@ -100,6 +100,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
                 intent.setAction(Intent.ACTION_EDIT);
                 intent.putExtra("mode", EDIT_ITEM);
                 intent.putExtra("id", info.id);
+               // intent.setData(OOTDContract.ItemEntry.buildItemUriWithId(info.id));
                 startActivityForResult(intent, EDIT_ITEM);
                 return true;
 

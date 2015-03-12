@@ -94,12 +94,10 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // CursorAdapter returns a cursor at the correct position for getItem(), or null
                 // if it cannot seek to that position.
-                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
+//                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
 //                if (cursor != null) {
 //                    ((Callback) getActivity())
-//                            .onItemSelected(OOTDContract.ItemEntry.buildWeatherLocationWithDate(
-//                                    locationSetting, cursor.getLong(COL_WEATHER_DATE)
-//                            ));
+//                            .onItemSelected(OOTDContract.ItemEntry.buildItemUriWithId(cursor.getLong(COL_ITEM_ID)));
 //                }
                 mPosition = position;
             }

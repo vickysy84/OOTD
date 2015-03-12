@@ -66,5 +66,9 @@ public class OOTDContract {
         public static Uri buildItemUriWithId(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+
+        public static int getItemIdFromUri(Uri uri) {
+            return Integer.parseInt(uri.getPathSegments().get(1));
+        }
     }
 }

@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * Created by vickysy on 3/10/15.
@@ -19,20 +20,41 @@ public class OOTDProvider extends ContentProvider {
     private OOTDDbHelper mOpenHelper;
 
     static final int ITEM = 100;
+    static final int ITEM_WITH_ID = 101;
 
-    private static final SQLiteQueryBuilder sWeatherByLocationSettingQueryBuilder;
+    private static final SQLiteQueryBuilder sItemByIdQueryBuilder;
 
     static{
-        sWeatherByLocationSettingQueryBuilder = new SQLiteQueryBuilder();
+        sItemByIdQueryBuilder = new SQLiteQueryBuilder();
 
+        sItemByIdQueryBuilder.setTables(
+                OOTDContract.ItemEntry.TABLE_NAME);
     }
 
-    /*
-        Students: Here is where you need to create the UriMatcher. This UriMatcher will
-        match each URI to the WEATHER, WEATHER_WITH_LOCATION, WEATHER_WITH_LOCATION_AND_DATE,
-        and LOCATION integer constants defined above.  You can test this by uncommenting the
-        testUriMatcher test within TestUriMatcher.
-     */
+    private static final String sItemIdSelection =
+            OOTDContract.ItemEntry.TABLE_NAME+
+                    "." + OOTDContract.ItemEntry._ID + " = ? ";
+
+    private Cursor getItemById(Uri uri, String[] projection, String sortOrder) {
+        int id = OOTDContract.ItemEntry.getItemIdFromUri(uri);
+        Log.i("id", "" + id);
+        String[] selectionArgs;
+        String selection;
+
+        selectionArgs = new String[]{Integer.toString(id)};
+        selection = sItemIdSelection;
+
+        Log.i("database", mOpenHelper.getReadableDatabase().toString());
+        return sItemByIdQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+    }
+
     static UriMatcher buildUriMatcher() {
         // I know what you're thinking.  Why create a UriMatcher when you can use regular
         // expressions instead?  Because you're not crazy, that's why.
@@ -45,6 +67,7 @@ public class OOTDProvider extends ContentProvider {
 
         // For each type of URI you want to add, create a corresponding code.
         matcher.addURI(authority, OOTDContract.PATH_ITEM, ITEM);
+        matcher.addURI(authority, OOTDContract.PATH_ITEM + "/#", ITEM_WITH_ID);
 
         return matcher;
     }
@@ -100,6 +123,11 @@ public class OOTDProvider extends ContentProvider {
                 break;
             }
 
+            // "item/#"
+            case ITEM_WITH_ID: {
+                retCursor = getItemById(uri, projection, sortOrder);
+                break;
+            }
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

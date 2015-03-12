@@ -1,10 +1,14 @@
 package com.vickysy.ootd;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +29,7 @@ import java.io.IOException;
  * Use the {@link NewItemFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewItemFragment extends Fragment implements View.OnClickListener{
+public class NewItemFragment extends Fragment implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>{
 
     static final String ITEM_URI = "URI";
     private Uri mUri;
@@ -38,6 +42,24 @@ public class NewItemFragment extends Fragment implements View.OnClickListener{
     private static final String ACTION = "action";
     private static final String ID = "id";
     private static final String IMAGE_BITMAP = "image_bitmap";
+
+    private static final String[] DETAIL_COLUMNS = {
+            // In this case the id needs to be fully qualified with a table name, since
+            // the content provider joins the location & weather tables in the background
+            // (both have an _id column)
+            // On the one hand, that's annoying.  On the other, you can search the weather table
+            // using the location set by the user, which is only in the Location table.
+            // So the convenience is worth it.
+            OOTDContract.ItemEntry.TABLE_NAME + "." + OOTDContract.ItemEntry._ID,
+            OOTDContract.ItemEntry.COLUMN_ITEM_TYPE,
+            OOTDContract.ItemEntry.COLUMN_IMG_PATH
+    };
+
+    // These indices are tied to ITEM_COLUMNS.  If ITEMS_COLUMNS changes, these
+    // must change.
+    static final int COL_ITEM_ID = 0;
+    static final int COL_ITEM_TYPE = 1;
+    static final int COL_IMG_PATH = 2;
 
     private int action;
     private long id;
@@ -72,7 +94,7 @@ public class NewItemFragment extends Fragment implements View.OnClickListener{
         NewItemFragment fragment = new NewItemFragment();
 
         Bundle arguments = new Bundle();
-        arguments.putParcelable(NewItemFragment.ITEM_URI, OOTDContract.ItemEntry.buildItemUri());
+        arguments.putParcelable(NewItemFragment.ITEM_URI, OOTDContract.ItemEntry.buildItemUriWithId(id));
         arguments.putInt(ACTION, action);
         arguments.putLong(ID, id);
         fragment.setArguments(arguments);
@@ -89,6 +111,7 @@ public class NewItemFragment extends Fragment implements View.OnClickListener{
 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            mUri = getArguments().getParcelable(NewItemFragment.ITEM_URI);
             action = getArguments().getInt(ACTION);
             id = getArguments().getLong(ID);
             if(action == NEW_ITEM) {
@@ -136,8 +159,6 @@ public class NewItemFragment extends Fragment implements View.OnClickListener{
                 break;
             case EDIT_ITEM: submitButton.setText("Save");
                 frameTitleView.setText("Edit Item");
-                // Search for item in db
-
                 break;
         }
 
@@ -174,5 +195,46 @@ public class NewItemFragment extends Fragment implements View.OnClickListener{
                     break;
             }
         }
+    }
+
+    void onItemEdit() {
+        // replace the uri, since the location has changed
+        Uri uri = mUri;
+        if (null != uri) {
+            Uri updatedUri = OOTDContract.ItemEntry.buildItemUriWithId(id);
+            mUri = updatedUri;
+            getLoaderManager().restartLoader(ITEM_LOADER, null, this);
+        }
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        if ( null != mUri ) {
+            // Now create and return a CursorLoader that will take care of
+            // creating a Cursor for the data being displayed.
+            return new CursorLoader(
+                    getActivity(),
+                    mUri,
+                    DETAIL_COLUMNS,
+                    null,
+                    null,
+                    null
+            );
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if (data != null && data.moveToFirst()) {
+            String itemType = data.getString(COL_ITEM_TYPE);
+            UIUtilities.setSpinnerValue(itemTypeSpinner, itemType);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }

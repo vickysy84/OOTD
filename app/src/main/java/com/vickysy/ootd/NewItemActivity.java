@@ -13,7 +13,7 @@ import com.vickysy.ootd.utils.PhotoUtility;
 
 public class NewItemActivity extends ActionBarActivity {
 
-
+    private static final String DETAILFRAGMENT_TAG = "DFTAG";
     static final int REQUEST_IMAGE_CAPTURE = 2;
 
     private long id = 0;
@@ -49,7 +49,7 @@ public class NewItemActivity extends ActionBarActivity {
                 case NewItemFragment.EDIT_ITEM:
                     NewItemFragment fragment = NewItemFragment.newInstance(mode, id);
                     getSupportFragmentManager().beginTransaction()
-                            .add(R.id.container, fragment)
+                            .add(R.id.fragment_new_item, fragment)
                             .commit();
                     break;
             }
@@ -75,7 +75,7 @@ public class NewItemActivity extends ActionBarActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             NewItemFragment fragment = NewItemFragment.newInstance(mode, id, imageBitmap);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, fragment)
+                    .add(R.id.fragment_new_item, fragment)
                     .commit();
         }
     }
@@ -101,5 +101,12 @@ public class NewItemActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NewItemFragment df = (NewItemFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_new_item);
+        df.onItemEdit();
     }
 }
