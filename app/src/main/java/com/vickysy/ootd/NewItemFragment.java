@@ -3,6 +3,7 @@ package com.vickysy.ootd;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -66,6 +67,7 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
     private Bitmap mImageBitmap;
 
     // Form elements
+    private ImageView mImageView;
     private Spinner itemTypeSpinner;
 
     /**
@@ -137,7 +139,7 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_new_item, container, false);
 
-        ImageView mImageView = (ImageView) rootView.findViewById(R.id.imageView);
+        mImageView = (ImageView) rootView.findViewById(R.id.imageView);
         TextView frameTitleView = (TextView) rootView.findViewById(R.id.frame_title_view);
         itemTypeSpinner = (Spinner) rootView.findViewById(R.id.item_type_spinner);
 
@@ -230,6 +232,11 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
         if (data != null && data.moveToFirst()) {
             String itemType = data.getString(COL_ITEM_TYPE);
             UIUtilities.setSpinnerValue(itemTypeSpinner, itemType);
+
+            // Read image path from cursor
+            String imgPath = data.getString(ItemFragment.COL_IMG_PATH);
+            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+            mImageView.setImageBitmap(bitmap);
         }
     }
 
