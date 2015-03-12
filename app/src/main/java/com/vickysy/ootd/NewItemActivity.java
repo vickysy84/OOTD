@@ -107,6 +107,8 @@ public class NewItemActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         NewItemFragment df = (NewItemFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_new_item);
-        df.onItemEdit();
+        if (df != null) {
+            df.onItemEdit();
+        }
     }
 }
