@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/menu_new_outfit"
-        android:icon="@drawable/ic_action_new"
+        android:icon="@drawable/ic_action_accessibility"
         android:title="@string/action_new_outfit"
         support:showAsAction="ifRoom"/>
 
