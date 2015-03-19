@@ -31,11 +31,19 @@ public class ItemAdapter extends CursorAdapter {
         //public final ImageView iconView;
         public final TextView itemTypeView;
         public final ImageView imagePathView;
+//        public final EditText brandText;
+//        public final EditText conditionText;
+//        public final EditText colorText;
+//        public final EditText materialText;
 
         public ViewHolder(View view) {
            // iconView = (ImageView) view.findViewById(R.id.list_item_icon);
             itemTypeView = (TextView) view.findViewById(R.id.list_item_type_view);
             imagePathView = (ImageView) view.findViewById(R.id.thumbnailImageView);
+//            brandText = (EditText) view.findViewById(R.id.brand_text);
+//            conditionText = (EditText) view.findViewById(R.id.condition_text);
+//            colorText = (EditText) view.findViewById(R.id.color_text);
+//            materialText = (EditText) view.findViewById(R.id.material_text);
         }
     }
 
@@ -86,6 +94,7 @@ public class ItemAdapter extends CursorAdapter {
             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
             viewHolder.imagePathView.setImageBitmap(bitmap);
         }
+
     }
 
     public void setUseGridLayout(boolean useGridLayout){

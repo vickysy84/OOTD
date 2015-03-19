@@ -29,11 +29,15 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
      * @param itemType
      * @return the row ID of the added item.
      */
-    long addItem(String itemType, String imagePath) {
+    long addItem(String itemType, String imagePath, String brand, String condition, String color, String material) {
         long itemId;
         ContentValues itemValues = new ContentValues();
         itemValues.put(OOTDContract.ItemEntry.COLUMN_ITEM_TYPE, itemType);
         itemValues.put(OOTDContract.ItemEntry.COLUMN_IMG_PATH, imagePath);
+        itemValues.put(OOTDContract.ItemEntry.COLUMN_BRAND, brand);
+        itemValues.put(OOTDContract.ItemEntry.COLUMN_CONDITION, condition);
+        itemValues.put(OOTDContract.ItemEntry.COLUMN_COLOR, color);
+        itemValues.put(OOTDContract.ItemEntry.COLUMN_MATERIAL, material);
         Uri insertedUri = mContext.getContentResolver().insert(
                 OOTDContract.ItemEntry.CONTENT_URI,
                 itemValues
@@ -71,7 +75,7 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
      * @param itemId
      * @return the rows deleted.
      */
-    int editItem(long itemId, String itemType) {
+    int editItem(long itemId, String itemType, String brand, String condition, String color, String material) {
         String mSelectionClause = OOTDContract.ItemEntry._ID+ " = ?";
         String[] mSelectionArgs = {"" + itemId};
 

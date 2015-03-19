@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,7 +55,11 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
             // So the convenience is worth it.
             OOTDContract.ItemEntry.TABLE_NAME + "." + OOTDContract.ItemEntry._ID,
             OOTDContract.ItemEntry.COLUMN_ITEM_TYPE,
-            OOTDContract.ItemEntry.COLUMN_IMG_PATH
+            OOTDContract.ItemEntry.COLUMN_IMG_PATH,
+            OOTDContract.ItemEntry.COLUMN_BRAND,
+            OOTDContract.ItemEntry.COLUMN_CONDITION,
+            OOTDContract.ItemEntry.COLUMN_COLOR,
+            OOTDContract.ItemEntry.COLUMN_MATERIAL
     };
 
     // These indices are tied to ITEM_COLUMNS.  If ITEMS_COLUMNS changes, these
@@ -62,6 +67,10 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
     static final int COL_ITEM_ID = 0;
     static final int COL_ITEM_TYPE = 1;
     static final int COL_IMG_PATH = 2;
+    static final int COL_BRAND = 3;
+    static final int COL_CONDITION = 4;
+    static final int COL_COLOR = 5;
+    static final int COL_MATERIAL = 6;
 
     private int action;
     private long id;
@@ -70,6 +79,10 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
     // Form elements
     private ImageView mImageView;
     private Spinner itemTypeSpinner;
+    private EditText brandText;
+    private EditText conditionText;
+    private EditText colorText;
+    private EditText materialText;
 
     /**
      * Use this factory method to create a new instance of
@@ -153,6 +166,11 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
         // Apply the adapter to the spinner
         itemTypeSpinner.setAdapter(adapter);
 
+        brandText = (EditText) rootView.findViewById(R.id.brand_text);
+        conditionText = (EditText) rootView.findViewById(R.id.condition_text);
+        colorText = (EditText) rootView.findViewById(R.id.color_text);
+        materialText = (EditText) rootView.findViewById(R.id.material_text);
+
         Button submitButton = (Button) rootView.findViewById(R.id.submit);
         submitButton.setOnClickListener(this);
 
@@ -178,7 +196,6 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                 case NEW_ITEM :
                     // save photo
                     String imagePath = "";
-                    Log.i("click", "" + (mImageBitmap != null));
                     if(mImageBitmap != null) {
                         try {
                             imagePath = PhotoUtility.saveImage(getActivity(), mImageBitmap);
@@ -187,7 +204,8 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                         }
                     }
                     // add item to db
-                    long itemId = iTask.addItem(itemTypeSpinner.getSelectedItem().toString(), imagePath);
+                    long itemId = iTask.addItem(itemTypeSpinner.getSelectedItem().toString(), imagePath, brandText.getText().toString(),
+                            conditionText.getText().toString(), colorText.getText().toString(), materialText.getText().toString());
                     Log.i("click", "click");
                     Intent intentMessage = new Intent();
                     intentMessage.putExtra("MESSAGE", "Success");
@@ -195,7 +213,8 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                     getActivity().finish();
                     break;
                 case EDIT_ITEM :
-                    int count = iTask.editItem(id, itemTypeSpinner.getSelectedItem().toString());
+                    int count = iTask.editItem(id, itemTypeSpinner.getSelectedItem().toString(), brandText.getText().toString(),
+                            conditionText.getText().toString(), colorText.getText().toString(), materialText.getText().toString());
                     Intent intentMessage2 = new Intent();
                     intentMessage2.putExtra("MESSAGE", "Success");
                     getActivity().setResult(2, intentMessage2);
@@ -240,9 +259,22 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
             UIUtilities.setSpinnerValue(itemTypeSpinner, itemType);
 
             // Read image path from cursor
-            String imgPath = data.getString(ItemFragment.COL_IMG_PATH);
+            String imgPath = data.getString(COL_IMG_PATH);
             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
             mImageView.setImageBitmap(bitmap);
+
+            String brand = data.getString(COL_BRAND);
+            Log.i("brand", brand);
+            brandText.setText(brand);
+
+            String condition = data.getString(COL_CONDITION);
+            conditionText.setText(condition);
+
+            String color = data.getString(COL_COLOR);
+            colorText.setText(color);
+
+            String material = data.getString(COL_MATERIAL);
+            materialText.setText(material);
         }
     }
 

@@ -44,7 +44,11 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
             // So the convenience is worth it.
             OOTDContract.ItemEntry.TABLE_NAME + "." + OOTDContract.ItemEntry._ID,
             OOTDContract.ItemEntry.COLUMN_ITEM_TYPE,
-            OOTDContract.ItemEntry.COLUMN_IMG_PATH
+            OOTDContract.ItemEntry.COLUMN_IMG_PATH,
+            OOTDContract.ItemEntry.COLUMN_BRAND,
+            OOTDContract.ItemEntry.COLUMN_CONDITION,
+            OOTDContract.ItemEntry.COLUMN_COLOR,
+            OOTDContract.ItemEntry.COLUMN_MATERIAL
     };
 
     // These indices are tied to ITEM_COLUMNS.  If ITEMS_COLUMNS changes, these
@@ -52,6 +56,10 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
     static final int COL_ITEM_ID = 0;
     static final int COL_ITEM_TYPE = 1;
     static final int COL_IMG_PATH = 2;
+    static final int COL_BRAND = 3;
+    static final int COL_CONDITION = 4;
+    static final int COL_COLOR = 5;
+    static final int COL_MATERIAL = 6;
 
     /**
      * A callback interface that all activities containing this fragment must

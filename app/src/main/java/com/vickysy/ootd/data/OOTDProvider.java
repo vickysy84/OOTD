@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 /**
  * Created by vickysy on 3/10/15.
@@ -37,14 +36,12 @@ public class OOTDProvider extends ContentProvider {
 
     private Cursor getItemById(Uri uri, String[] projection, String sortOrder) {
         int id = OOTDContract.ItemEntry.getItemIdFromUri(uri);
-        Log.i("id", "" + id);
         String[] selectionArgs;
         String selection;
 
         selectionArgs = new String[]{Integer.toString(id)};
         selection = sItemIdSelection;
 
-        Log.i("database", mOpenHelper.getReadableDatabase().toString());
         return sItemByIdQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
                 selection,

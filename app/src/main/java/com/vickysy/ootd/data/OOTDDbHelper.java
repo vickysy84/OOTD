@@ -26,7 +26,11 @@ public class OOTDDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_ITEM_TABLE = "CREATE TABLE " + ItemEntry.TABLE_NAME + " (" +
                 ItemEntry._ID + " INTEGER PRIMARY KEY," +
                 ItemEntry.COLUMN_ITEM_TYPE + " TEXT NOT NULL, " +
-                ItemEntry.COLUMN_IMG_PATH + " TEXT " +
+                ItemEntry.COLUMN_IMG_PATH + " TEXT, " +
+                ItemEntry.COLUMN_BRAND + " TEXT, " +
+                ItemEntry.COLUMN_CONDITION + " TEXT, " +
+                ItemEntry.COLUMN_COLOR + " TEXT, " +
+                ItemEntry.COLUMN_MATERIAL + " TEXT " +
                 " );";
 
         db.execSQL(SQL_CREATE_ITEM_TABLE);

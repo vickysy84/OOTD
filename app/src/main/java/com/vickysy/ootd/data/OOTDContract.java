@@ -59,6 +59,8 @@ public class OOTDContract {
         // The material of the item
         public static final String COLUMN_MATERIAL = "material";
 
+        public static final String COLUMN_DATE_PURCHASED = "date_purchased";
+
         public static Uri buildItemUri() {
             return CONTENT_URI;
         }

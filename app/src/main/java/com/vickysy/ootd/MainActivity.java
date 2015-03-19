@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -111,13 +112,17 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Toast toast = Toast.makeText(this, "New Item Added", Toast.LENGTH_SHORT);
-        toast.show();
         if(requestCode == NEW_ITEM)
         {
+            Log.i("newitem", "new item");
             // new item success
-//            Toast toast = Toast.makeText(this, "New Item Added", Toast.LENGTH_SHORT);
-//            toast.show();
+            Toast toast2 = Toast.makeText(this, "New Item Added", Toast.LENGTH_SHORT);
+            toast2.show();
+        }
+        else if (requestCode == EDIT_ITEM) {
+            // new item success
+            Toast toast3 = Toast.makeText(this, "Item Edited", Toast.LENGTH_SHORT);
+            toast3.show();
         }
     }
 
