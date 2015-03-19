@@ -84,6 +84,10 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
         // Defines an object to contain the updated values
         ContentValues mUpdateValues = new ContentValues();
         mUpdateValues.put(OOTDContract.ItemEntry.COLUMN_ITEM_TYPE, itemType);
+        mUpdateValues.put(OOTDContract.ItemEntry.COLUMN_BRAND, brand);
+        mUpdateValues.put(OOTDContract.ItemEntry.COLUMN_CONDITION, condition);
+        mUpdateValues.put(OOTDContract.ItemEntry.COLUMN_COLOR, color);
+        mUpdateValues.put(OOTDContract.ItemEntry.COLUMN_MATERIAL, material);
 
         mRowsUpdated = mContext.getContentResolver().update(
                 OOTDContract.ItemEntry.CONTENT_URI,

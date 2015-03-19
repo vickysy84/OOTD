@@ -19,6 +19,8 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
 
     private static final int NEW_ITEM = 0;
     private static final int EDIT_ITEM = 1;
+
+    private static final int SUCCESS = 1;
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
     private boolean mTwoPane;
 
@@ -72,15 +74,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             case R.id.menu_new:
                 //
                 if (mTwoPane) {
-                    // In two-pane mode, show the detail view in this activity by
-                    // adding or replacing the detail fragment using a
-                    // fragment transaction.
-//                    Bundle args = new Bundle();
-//                    args.putParcelable(NewItemFragment.ITEM_URI, OOTDContract.ItemEntry.buildItemUri());
-
                     NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0);
-                    //fragment.setArguments(args);
-
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
                             .commit();
@@ -112,14 +106,14 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == NEW_ITEM)
+        if(requestCode == NEW_ITEM && resultCode == SUCCESS)
         {
             Log.i("newitem", "new item");
             // new item success
             Toast toast2 = Toast.makeText(this, "New Item Added", Toast.LENGTH_SHORT);
             toast2.show();
         }
-        else if (requestCode == EDIT_ITEM) {
+        else if (requestCode == EDIT_ITEM && resultCode == SUCCESS) {
             // new item success
             Toast toast3 = Toast.makeText(this, "Item Edited", Toast.LENGTH_SHORT);
             toast3.show();
@@ -142,13 +136,20 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         switch (id) {
 
             case R.id.menu_edit:
-                Intent intent = new Intent(this, NewItemActivity.class);
-                intent.setAction(Intent.ACTION_EDIT);
-                intent.putExtra("mode", EDIT_ITEM);
-                intent.putExtra("id", info.id);
-               // intent.setData(OOTDContract.ItemEntry.buildItemUriWithId(info.id));
-                startActivityForResult(intent, EDIT_ITEM);
-                return true;
+
+                if (mTwoPane) {
+                    NewItemFragment fragment = NewItemFragment.newInstance(EDIT_ITEM, 0);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
+                            .commit();
+                } else {
+                    Intent intent = new Intent(this, NewItemActivity.class);
+                    intent.setAction(Intent.ACTION_EDIT);
+                    intent.putExtra("mode", EDIT_ITEM);
+                    intent.putExtra("id", info.id);
+                    startActivityForResult(intent, EDIT_ITEM);
+                    return true;
+                }
 
             case R.id.menu_delete:
                 ItemTask iit = new ItemTask(this);

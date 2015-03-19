@@ -209,7 +209,7 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                     Log.i("click", "click");
                     Intent intentMessage = new Intent();
                     intentMessage.putExtra("MESSAGE", "Success");
-                    getActivity().setResult(0, intentMessage);
+                    getActivity().setResult(itemId > 0?1:0, intentMessage);
                     getActivity().finish();
                     break;
                 case EDIT_ITEM :
@@ -217,9 +217,11 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                             conditionText.getText().toString(), colorText.getText().toString(), materialText.getText().toString());
                     Intent intentMessage2 = new Intent();
                     intentMessage2.putExtra("MESSAGE", "Success");
-                    getActivity().setResult(2, intentMessage2);
+                    getActivity().setResult(count>0?1:0, intentMessage2);
                     getActivity().finish();
                     break;
+                default:
+
             }
         }
     }
