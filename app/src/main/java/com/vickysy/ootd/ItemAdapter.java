@@ -22,6 +22,7 @@ public class ItemAdapter extends CursorAdapter {
 
     // Flag to determine if we want to use a separate view for "grid".
     private boolean mUseGridLayout = true;
+    private LayoutInflater mInflater;
 
     /**
      * Cache of the children views for a forecast list item.
@@ -58,8 +59,10 @@ public class ItemAdapter extends CursorAdapter {
 
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
+        view.setBackground(context.getResources().getDrawable(R.drawable.item_view));
         return view;
     }
+
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
@@ -69,7 +72,6 @@ public class ItemAdapter extends CursorAdapter {
         int viewType = getItemViewType(cursor.getPosition());
         switch (viewType) {
             case VIEW_TYPE_GRID: {
-                // Get weather icon
 
                 break;
             }
@@ -80,8 +82,10 @@ public class ItemAdapter extends CursorAdapter {
 
         // Read image path from cursor
         String imgPath = cursor.getString(ItemFragment.COL_IMG_PATH);
-        Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-		viewHolder.imagePathView.setImageBitmap(bitmap);
+        if (imgPath != null && !imgPath.isEmpty()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+            viewHolder.imagePathView.setImageBitmap(bitmap);
+        }
     }
 
     public void setUseGridLayout(boolean useGridLayout){

@@ -4,7 +4,11 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    tools:context="com.vickysy.ootd.ItemFragment">
+    android:background="@drawable/border"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:layout_margin="@dimen/activity_vertical_margin"
+    tools:context="com.vickysy.ootd.ItemFragment" >
 
     <ImageView
         android:layout_width="wrap_content"

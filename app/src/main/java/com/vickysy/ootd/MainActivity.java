@@ -11,20 +11,42 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity implements ItemFragment.Callback{
 
     private static final int NEW_ITEM = 0;
     private static final int EDIT_ITEM = 1;
+    private static final String DETAILFRAGMENT_TAG = "DFTAG";
+    private boolean mTwoPane;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setElevation(0f);
+        if (findViewById(R.id.fragment_new_item) != null) {
+            // The detail container view will be present only in the large-screen layouts
+            // (res/layout-sw600dp). If this view is present, then the activity should be
+            // in two-pane mode.
+            mTwoPane = true;
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_new_item, new NewItemFragment(), DETAILFRAGMENT_TAG)
+                        .commit();
+            }
+        } else {
+            mTwoPane = false;
+            getSupportActionBar().setElevation(0f);
+        }
+
         ItemFragment itemFragment =  ((ItemFragment)getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_item));
+        getSupportActionBar().setElevation(0f);
         itemFragment.setUseGridLayout(true);
         GridView gridView = (GridView) findViewById(R.id.gridview_item);
         registerForContextMenu(gridView);
@@ -47,12 +69,29 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         switch (id) {
 
             case R.id.menu_new:
-                Intent intent = new Intent(this, NewItemActivity.class);
-                intent.setAction(Intent.ACTION_INSERT);
-                intent.putExtra("mode", NEW_ITEM);
-                intent.putExtra("id", 0);
-                startActivityForResult(new Intent(this, NewItemActivity.class), NEW_ITEM);
-                return true;
+                //
+                if (mTwoPane) {
+                    // In two-pane mode, show the detail view in this activity by
+                    // adding or replacing the detail fragment using a
+                    // fragment transaction.
+//                    Bundle args = new Bundle();
+//                    args.putParcelable(NewItemFragment.ITEM_URI, OOTDContract.ItemEntry.buildItemUri());
+
+                    NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0);
+                    //fragment.setArguments(args);
+
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
+                            .commit();
+                } else {
+                    Intent intent = new Intent(this, NewItemActivity.class);
+                    intent.setAction(Intent.ACTION_INSERT);
+                    intent.putExtra("mode", NEW_ITEM);
+                    intent.putExtra("id", 0);
+                    startActivityForResult(new Intent(this, NewItemActivity.class), NEW_ITEM);
+                    return true;
+                }
+
 
             case R.id.menu_settings:
                 // Here we would open up our settings activity
@@ -72,11 +111,13 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
     {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Toast toast = Toast.makeText(this, "New Item Added", Toast.LENGTH_SHORT);
+        toast.show();
         if(requestCode == NEW_ITEM)
         {
             // new item success
-
-            //this.sendBroadcast(data);
+//            Toast toast = Toast.makeText(this, "New Item Added", Toast.LENGTH_SHORT);
+//            toast.show();
         }
     }
 

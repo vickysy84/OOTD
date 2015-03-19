@@ -44,6 +44,10 @@ public class NewItemActivity extends ActionBarActivity {
                         dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
                     } else {
                         //log error
+                        NewItemFragment fragment = NewItemFragment.newInstance(mode, id);
+                        getSupportFragmentManager().beginTransaction()
+                                .add(R.id.fragment_new_item, fragment)
+                                .commit();
                     }
                     break;
                 case NewItemFragment.EDIT_ITEM:

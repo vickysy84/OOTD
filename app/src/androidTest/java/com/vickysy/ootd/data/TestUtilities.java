@@ -55,7 +55,7 @@ public class TestUtilities extends AndroidTestCase {
         // Create a new map of values, where column names are the keys
         ContentValues testValues = new ContentValues();
         testValues.put(OOTDContract.ItemEntry.COLUMN_ITEM_TYPE, TEST_ITEM_TYPE);
-        testValues.put(OOTDContract.ItemEntry.COLUMN_IMG_PATH, "/path/image.jpg");
+        testValues.put(OOTDContract.ItemEntry.COLUMN_IMG_PATH, "");
 
         return testValues;
     }

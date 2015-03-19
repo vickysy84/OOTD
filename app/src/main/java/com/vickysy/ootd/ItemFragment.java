@@ -87,6 +87,7 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
         // Get a reference to the ListView, and attach this adapter to it.
         mGridView = (GridView) rootView.findViewById(R.id.gridview_item);
         mGridView.setAdapter(mItemAdapter);
+
         // We'll call our MainActivity
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -94,11 +95,17 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // CursorAdapter returns a cursor at the correct position for getItem(), or null
                 // if it cannot seek to that position.
-//                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
-//                if (cursor != null) {
-//                    ((Callback) getActivity())
-//                            .onItemSelected(OOTDContract.ItemEntry.buildItemUriWithId(cursor.getLong(COL_ITEM_ID)));
-//                }
+                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
+                if (cursor != null) {
+                    ((Callback) getActivity())
+                            .onItemSelected(OOTDContract.ItemEntry.buildItemUriWithId(cursor.getLong(COL_ITEM_ID)));
+                }
+                // add border to the item
+                if (view.isSelected()){
+                    view.setSelected(false);
+                } else {
+                    view.setSelected(true);
+                }
                 mPosition = position;
             }
         });

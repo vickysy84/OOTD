@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,6 +111,7 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.i("uri", "uri");
 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -176,13 +178,17 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                 case NEW_ITEM :
                     // save photo
                     String imagePath = "";
-                    try {
-                        imagePath = PhotoUtility.saveImage(getActivity(), mImageBitmap);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    Log.i("click", "" + (mImageBitmap != null));
+                    if(mImageBitmap != null) {
+                        try {
+                            imagePath = PhotoUtility.saveImage(getActivity(), mImageBitmap);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     // add item to db
                     long itemId = iTask.addItem(itemTypeSpinner.getSelectedItem().toString(), imagePath);
+                    Log.i("click", "click");
                     Intent intentMessage = new Intent();
                     intentMessage.putExtra("MESSAGE", "Success");
                     getActivity().setResult(0, intentMessage);
