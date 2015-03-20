@@ -1,8 +1,10 @@
 package com.vickysy.ootd;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+
+import com.vickysy.ootd.utils.PhotoUtility;
 
 
 public class MainActivity extends ActionBarActivity implements ItemFragment.Callback{
@@ -23,6 +27,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
     private boolean mTwoPane;
 
+    static final int REQUEST_IMAGE_CAPTURE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +43,9 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             // fragment transaction.
             if (savedInstanceState == null) {
                 NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, true);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
-                        .commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
+                            .commit();
             }
         } else {
             mTwoPane = false;
@@ -63,6 +68,14 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         return true;
     }
 
+
+    private void dispatchTakePictureIntent(int actionCode) {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePictureIntent, actionCode);
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -74,10 +87,15 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             case R.id.menu_new:
                 //
                 if (mTwoPane) {
-                    NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, true);
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
-                            .commit();
+                    //dispatch camera
+                    if (PhotoUtility.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE)) {
+                        dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
+                    } else {
+                        NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, true);
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
+                                .commit();
+                    }
                 } else {
                     Intent intent = new Intent(this, NewItemActivity.class);
                     intent.setAction(Intent.ACTION_INSERT);
@@ -86,11 +104,6 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
                     startActivityForResult(new Intent(this, NewItemActivity.class), NEW_ITEM);
                     return true;
                 }
-
-
-//            case R.id.menu_settings:
-//                // Here we would open up our settings activity
-//                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -129,6 +142,14 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             // new item success
             Toast toast3 = Toast.makeText(this, "Item Edited", Toast.LENGTH_SHORT);
             toast3.show();
+        }
+        else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, imageBitmap, false);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_new_item, fragment)
+                    .commit();
         }
     }
 
