@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vickysy.ootd.data.OOTDContract;
 import com.vickysy.ootd.utils.PhotoUtility;
@@ -45,6 +46,7 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
     private static final String ACTION = "action";
     private static final String ID = "id";
     private static final String IMAGE_BITMAP = "image_bitmap";
+    private static final String TWO_PANE = "two_pane";
 
     private static final String[] DETAIL_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
@@ -75,6 +77,7 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
     private int action;
     private long id;
     private Bitmap mImageBitmap;
+    private boolean mTwoPane;
 
     // Form elements
     private ImageView mImageView;
@@ -93,26 +96,28 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
      * @param imageBitmap image to save
      * @return A new instance of fragment NewItemFragment.
      */
-    public static NewItemFragment newInstance(int action, long id, Bitmap imageBitmap) {
+    public static NewItemFragment newInstance(int action, long id, Bitmap imageBitmap, boolean twoPane) {
         NewItemFragment fragment = new NewItemFragment();
 
         Bundle arguments = new Bundle();
         arguments.putParcelable(NewItemFragment.ITEM_URI, OOTDContract.ItemEntry.buildItemUri());
         arguments.putInt(ACTION, action);
         arguments.putLong(ID, id);
+        arguments.putBoolean(TWO_PANE, twoPane);
         arguments.putParcelable(NewItemFragment.IMAGE_BITMAP, imageBitmap);
         fragment.setArguments(arguments);
 
         return fragment;
     }
 
-    public static NewItemFragment newInstance(int action, long id) {
+    public static NewItemFragment newInstance(int action, long id, boolean twoPane) {
         NewItemFragment fragment = new NewItemFragment();
 
         Bundle arguments = new Bundle();
         arguments.putParcelable(NewItemFragment.ITEM_URI, OOTDContract.ItemEntry.buildItemUriWithId(id));
         arguments.putInt(ACTION, action);
         arguments.putLong(ID, id);
+        arguments.putBoolean(TWO_PANE, twoPane);
         fragment.setArguments(arguments);
 
         return fragment;
@@ -124,13 +129,13 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i("uri", "uri");
 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mUri = getArguments().getParcelable(NewItemFragment.ITEM_URI);
             action = getArguments().getInt(ACTION);
             id = getArguments().getLong(ID);
+            mTwoPane = getArguments().getBoolean(NewItemFragment.TWO_PANE);
             if(action == NEW_ITEM) {
                 mImageBitmap = getArguments().getParcelable(NewItemFragment.IMAGE_BITMAP);
             }
@@ -146,6 +151,7 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
             mUri = arguments.getParcelable(NewItemFragment.ITEM_URI);
             action = arguments.getInt(NewItemFragment.ACTION);
             id = arguments.getLong(NewItemFragment.ID);
+            mTwoPane = arguments.getBoolean(NewItemFragment.TWO_PANE);
             if (action == NEW_ITEM) {
                 mImageBitmap = arguments.getParcelable(NewItemFragment.IMAGE_BITMAP);
             }
@@ -210,7 +216,12 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                     Intent intentMessage = new Intent();
                     intentMessage.putExtra("MESSAGE", "Success");
                     getActivity().setResult(itemId > 0?1:0, intentMessage);
-                    getActivity().finish();
+                    if (!mTwoPane) {
+                        getActivity().finish();
+                    } else if (itemId > 0) {
+                        Toast toast2 = Toast.makeText(getActivity(), "New Item Added", Toast.LENGTH_SHORT);
+                        toast2.show();
+                    }
                     break;
                 case EDIT_ITEM :
                     int count = iTask.editItem(id, itemTypeSpinner.getSelectedItem().toString(), brandText.getText().toString(),
@@ -218,7 +229,12 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                     Intent intentMessage2 = new Intent();
                     intentMessage2.putExtra("MESSAGE", "Success");
                     getActivity().setResult(count>0?1:0, intentMessage2);
-                    getActivity().finish();
+                    if (!mTwoPane) {
+                        getActivity().finish();
+                    } else if (count > 0) {
+                        Toast toast3 = Toast.makeText(getActivity(), "Item Edited", Toast.LENGTH_SHORT);
+                        toast3.show();
+                    }
                     break;
                 default:
 
@@ -226,8 +242,14 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
         }
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        getLoaderManager().initLoader(ITEM_LOADER, null, this);
+        super.onActivityCreated(savedInstanceState);
+    }
+
     void onItemEdit() {
-        // replace the uri, since the location has changed
+        // replace the uri, since the id has changed
         Uri uri = mUri;
         if (null != uri) {
             Uri updatedUri = OOTDContract.ItemEntry.buildItemUriWithId(id);

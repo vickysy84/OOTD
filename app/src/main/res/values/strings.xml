@@ -16,6 +16,7 @@
     <string name="sportswear">Sportswear</string>
     <string name="jacket">Jacket</string>
     <string name="coat">Coat</string>
+    <string name="accessory">Accessory</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

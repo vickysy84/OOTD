@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,8 +37,9 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             // adding or replacing the detail fragment using a
             // fragment transaction.
             if (savedInstanceState == null) {
+                NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, true);
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_new_item, new NewItemFragment(), DETAILFRAGMENT_TAG)
+                        .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
                         .commit();
             }
         } else {
@@ -74,7 +74,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             case R.id.menu_new:
                 //
                 if (mTwoPane) {
-                    NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0);
+                    NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, true);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
                             .commit();
@@ -88,9 +88,9 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
                 }
 
 
-            case R.id.menu_settings:
-                // Here we would open up our settings activity
-                return true;
+//            case R.id.menu_settings:
+//                // Here we would open up our settings activity
+//                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -102,13 +102,25 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        ItemFragment ff = (ItemFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_item);
+        if ( null != ff ) {
+            ff.onResume();
+        }
+        NewItemFragment df = (NewItemFragment)getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
+        if ( null != df ) {
+            df.onItemEdit();
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == NEW_ITEM && resultCode == SUCCESS)
         {
-            Log.i("newitem", "new item");
             // new item success
             Toast toast2 = Toast.makeText(this, "New Item Added", Toast.LENGTH_SHORT);
             toast2.show();
@@ -138,7 +150,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             case R.id.menu_edit:
 
                 if (mTwoPane) {
-                    NewItemFragment fragment = NewItemFragment.newInstance(EDIT_ITEM, 0);
+                    NewItemFragment fragment = NewItemFragment.newInstance(EDIT_ITEM, info.id, true);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
                             .commit();
@@ -148,9 +160,8 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
                     intent.putExtra("mode", EDIT_ITEM);
                     intent.putExtra("id", info.id);
                     startActivityForResult(intent, EDIT_ITEM);
-                    return true;
                 }
-
+                return true;
             case R.id.menu_delete:
                 ItemTask iit = new ItemTask(this);
                 long deletedRows = iit.deleteItem(info.id);

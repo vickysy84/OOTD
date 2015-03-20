@@ -13,5 +13,6 @@
         <item>@string/footwear</item>
         <item>@string/sportswear</item>
         <item>@string/hosiery</item>
+        <item>@string/accessory</item>
     </string-array>
 </resources>

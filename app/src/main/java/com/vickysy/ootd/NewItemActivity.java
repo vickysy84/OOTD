@@ -44,14 +44,14 @@ public class NewItemActivity extends ActionBarActivity {
                         dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
                     } else {
                         //log error
-                        NewItemFragment fragment = NewItemFragment.newInstance(mode, id);
+                        NewItemFragment fragment = NewItemFragment.newInstance(mode, id, false);
                         getSupportFragmentManager().beginTransaction()
                                 .add(R.id.fragment_new_item, fragment)
                                 .commit();
                     }
                     break;
                 case NewItemFragment.EDIT_ITEM:
-                    NewItemFragment fragment = NewItemFragment.newInstance(mode, id);
+                    NewItemFragment fragment = NewItemFragment.newInstance(mode, id, false);
                     getSupportFragmentManager().beginTransaction()
                             .add(R.id.fragment_new_item, fragment)
                             .commit();
@@ -77,7 +77,7 @@ public class NewItemActivity extends ActionBarActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            NewItemFragment fragment = NewItemFragment.newInstance(mode, id, imageBitmap);
+            NewItemFragment fragment = NewItemFragment.newInstance(mode, id, imageBitmap, false);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_new_item, fragment)
                     .commit();
