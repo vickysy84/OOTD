@@ -186,6 +186,10 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             case R.id.menu_delete:
                 ItemTask iit = new ItemTask(this);
                 long deletedRows = iit.deleteItem(info.id);
+                if (deletedRows > 0){
+                    Toast toast2 = Toast.makeText(this, "Item Deleted", Toast.LENGTH_SHORT);
+                    toast2.show();
+                }
                 return true;
         }
         return super.onContextItemSelected(item);

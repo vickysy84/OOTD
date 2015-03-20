@@ -25,25 +25,15 @@ public class ItemAdapter extends CursorAdapter {
     private LayoutInflater mInflater;
 
     /**
-     * Cache of the children views for a forecast list item.
+     * Cache of the children views for a list item.
      */
     public static class ViewHolder {
-        //public final ImageView iconView;
         public final TextView itemTypeView;
         public final ImageView imagePathView;
-//        public final EditText brandText;
-//        public final EditText conditionText;
-//        public final EditText colorText;
-//        public final EditText materialText;
 
         public ViewHolder(View view) {
-           // iconView = (ImageView) view.findViewById(R.id.list_item_icon);
             itemTypeView = (TextView) view.findViewById(R.id.list_item_type_view);
             imagePathView = (ImageView) view.findViewById(R.id.thumbnailImageView);
-//            brandText = (EditText) view.findViewById(R.id.brand_text);
-//            conditionText = (EditText) view.findViewById(R.id.condition_text);
-//            colorText = (EditText) view.findViewById(R.id.color_text);
-//            materialText = (EditText) view.findViewById(R.id.material_text);
         }
     }
 
@@ -67,7 +57,6 @@ public class ItemAdapter extends CursorAdapter {
 
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
-        view.setBackground(context.getResources().getDrawable(R.drawable.item_view));
         return view;
     }
 
