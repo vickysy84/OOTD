@@ -22,19 +22,22 @@ public class NewItemActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        Bundle extras2 = intent.getExtras();
+
+        if (extras2 != null) {
+            mode = extras2.getInt("mode");
+            id = extras2.getLong("id");
+        }
+        if (mode == NewItemFragment.NEW_ITEM){
+            setTitle("New Item");
+        }
+        else {
+            setTitle("Edit Item");
+        }
         setContentView(R.layout.activity_new_item);
 
         if (savedInstanceState == null) {
-
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            Intent intent = getIntent();
-            Bundle extras2 = intent.getExtras();
-
-            if (extras2 != null) {
-                mode = extras2.getInt("mode");
-                id = extras2.getLong("id");
-            }
 
             // check if add
             switch (mode) {
