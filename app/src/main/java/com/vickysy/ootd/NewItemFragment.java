@@ -6,11 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +37,8 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
 
     static final String ITEM_URI = "URI";
     private Uri mUri;
+
+    static final int REQUEST_IMAGE_CAPTURE = 2;
 
     private static final int ITEM_LOADER = 0;
 
@@ -142,6 +144,31 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
         }
     }
 
+    private void dispatchTakePictureIntent(int actionCode) {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePictureIntent, actionCode);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == getActivity().RESULT_OK) {
+            Bundle extras = data.getExtras();
+            mImageBitmap = (Bitmap) extras.get("data");
+            getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    mImageView.setImageDrawable(null);
+                    mImageView.setImageBitmap(mImageBitmap);
+                    mImageView.invalidate();
+                }
+            });
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -161,6 +188,18 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
         View rootView = inflater.inflate(R.layout.fragment_new_item, container, false);
 
         mImageView = (ImageView) rootView.findViewById(R.id.imageView);
+        mImageView.setOnLongClickListener( new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // take photo and set to mImageView
+                // call camera intent
+                if (PhotoUtility.isIntentAvailable(getActivity(), MediaStore.ACTION_IMAGE_CAPTURE)) {
+                    dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
+                }
+                return true;
+            }
+        } );
+
         TextView frameTitleView = (TextView) rootView.findViewById(R.id.frame_title_view);
         itemTypeSpinner = (Spinner) rootView.findViewById(R.id.item_type_spinner);
 
@@ -212,7 +251,6 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                     // add item to db
                     long itemId = iTask.addItem(itemTypeSpinner.getSelectedItem().toString(), imagePath, brandText.getText().toString(),
                             conditionText.getText().toString(), colorText.getText().toString(), materialText.getText().toString());
-                    Log.i("click", "click");
                     Intent intentMessage = new Intent();
                     intentMessage.putExtra("MESSAGE", "Success");
                     getActivity().setResult(itemId > 0?1:0, intentMessage);
@@ -224,7 +262,15 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                     }
                     break;
                 case EDIT_ITEM :
-                    int count = iTask.editItem(id, itemTypeSpinner.getSelectedItem().toString(), brandText.getText().toString(),
+                    String imagePath2 = "";
+                    if(mImageBitmap != null) {
+                        try {
+                            imagePath2 = PhotoUtility.saveImage(getActivity(), mImageBitmap);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    int count = iTask.editItem(id, itemTypeSpinner.getSelectedItem().toString(), imagePath2, brandText.getText().toString(),
                             conditionText.getText().toString(), colorText.getText().toString(), materialText.getText().toString());
                     Intent intentMessage2 = new Intent();
                     intentMessage2.putExtra("MESSAGE", "Success");
@@ -283,12 +329,13 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
             UIUtilities.setSpinnerValue(itemTypeSpinner, itemType);
 
             // Read image path from cursor
-            String imgPath = data.getString(COL_IMG_PATH);
-            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-            mImageView.setImageBitmap(bitmap);
+            if (mImageBitmap == null) {
+                String imgPath = data.getString(COL_IMG_PATH);
+                mImageBitmap = BitmapFactory.decodeFile(imgPath);
+            }
+            mImageView.setImageBitmap(mImageBitmap);
 
             String brand = data.getString(COL_BRAND);
-            Log.i("brand", brand);
             brandText.setText(brand);
 
             String condition = data.getString(COL_CONDITION);

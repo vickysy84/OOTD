@@ -75,7 +75,7 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
      * @param itemId
      * @return the rows deleted.
      */
-    int editItem(long itemId, String itemType, String brand, String condition, String color, String material) {
+    int editItem(long itemId, String itemType,  String imagePath, String brand, String condition, String color, String material) {
         String mSelectionClause = OOTDContract.ItemEntry._ID+ " = ?";
         String[] mSelectionArgs = {"" + itemId};
 
@@ -84,6 +84,7 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
         // Defines an object to contain the updated values
         ContentValues mUpdateValues = new ContentValues();
         mUpdateValues.put(OOTDContract.ItemEntry.COLUMN_ITEM_TYPE, itemType);
+        mUpdateValues.put(OOTDContract.ItemEntry.COLUMN_IMG_PATH, imagePath);
         mUpdateValues.put(OOTDContract.ItemEntry.COLUMN_BRAND, brand);
         mUpdateValues.put(OOTDContract.ItemEntry.COLUMN_CONDITION, condition);
         mUpdateValues.put(OOTDContract.ItemEntry.COLUMN_COLOR, color);
