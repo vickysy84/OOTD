@@ -57,6 +57,7 @@ public class ItemAdapter extends CursorAdapter {
 
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
+        view.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.item_view));
         return view;
     }
 
