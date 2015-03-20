@@ -95,7 +95,6 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
         // Get a reference to the ListView, and attach this adapter to it.
         mGridView = (GridView) rootView.findViewById(R.id.gridview_item);
         mGridView.setAdapter(mItemAdapter);
-
         // We'll call our MainActivity
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

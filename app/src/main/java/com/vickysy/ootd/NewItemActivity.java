@@ -84,6 +84,8 @@ public class NewItemActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_new_item, fragment)
                     .commit();
+        } else if ( requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_CANCELED) {
+            this.finish();
         }
     }
 
