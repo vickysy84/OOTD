@@ -17,9 +17,6 @@ import com.vickysy.ootd.data.OOTDContract;
 
 /**
  * A fragment representing a list of Items.
- * <p/>
- * Large screen devices (such as tablets) are supported by adding more columns in GridView.
- * <p/>
  * interface.
  */
 public class ItemFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -33,15 +30,8 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
     private static final String SELECTED_KEY = "selected_item";
 
     private static final int ITEM_LOADER = 0;
-    // For the forecast view we're showing only a small subset of the stored data.
-    // Specify the columns we need.
+
     private static final String[] ITEM_COLUMNS = {
-            // In this case the id needs to be fully qualified with a table name, since
-            // the content provider joins the location & weather tables in the background
-            // (both have an _id column)
-            // On the one hand, that's annoying.  On the other, you can search the weather table
-            // using the location set by the user, which is only in the Location table.
-            // So the convenience is worth it.
             OOTDContract.ItemEntry.TABLE_NAME + "." + OOTDContract.ItemEntry._ID,
             OOTDContract.ItemEntry.COLUMN_ITEM_TYPE,
             OOTDContract.ItemEntry.COLUMN_IMG_PATH,
@@ -51,8 +41,6 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
             OOTDContract.ItemEntry.COLUMN_MATERIAL
     };
 
-    // These indices are tied to ITEM_COLUMNS.  If ITEMS_COLUMNS changes, these
-    // must change.
     static final int COL_ITEM_ID = 0;
     static final int COL_ITEM_TYPE = 1;
     static final int COL_IMG_PATH = 2;
@@ -117,19 +105,11 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
             }
         });
 
-        // If there's instance state, mine it for useful information.
-        // The end-goal here is that the user never knows that turning their device sideways
-        // does crazy lifecycle related things.  It should feel like some stuff stretched out,
-        // or magically appeared to take advantage of room, but data or place in the app was never
-        // actually *lost*.
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
-            // The listview probably hasn't even been populated yet.  Actually perform the
-            // swapout in onLoadFinished.
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
         }
 
         mItemAdapter.setUseGridLayout(mUseGridLayout);
-
 
         return rootView;
     }

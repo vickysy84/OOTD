@@ -24,4 +24,5 @@
 
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
+    <string name="title_activity_new_outfit">NewOutfitActivity</string>
 </resources>

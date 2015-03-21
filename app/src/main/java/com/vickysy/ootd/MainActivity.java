@@ -34,13 +34,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (findViewById(R.id.fragment_new_item) != null) {
-            // The detail container view will be present only in the large-screen layouts
-            // (res/layout-sw600dp). If this view is present, then the activity should be
-            // in two-pane mode.
             mTwoPane = true;
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
             if (savedInstanceState == null) {
                 NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, true);
                     getSupportFragmentManager().beginTransaction()
@@ -62,7 +56,6 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return true;
@@ -70,7 +63,6 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
 
 
     private void dispatchTakePictureIntent(int actionCode) {
-
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(takePictureIntent, actionCode);
     }
@@ -78,9 +70,6 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
 
