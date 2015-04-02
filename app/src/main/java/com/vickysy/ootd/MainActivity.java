@@ -15,13 +15,15 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.vickysy.ootd.utils.PhotoUtility;
+import com.github.clans.fab.FloatingActionButton;
+import com.vickysy.ootd.utils.camera.PhotoUtility;
 
 
 public class MainActivity extends ActionBarActivity implements ItemFragment.Callback{
 
     private static final int NEW_ITEM = 0;
     private static final int EDIT_ITEM = 1;
+    private static final int NEW_OUTFIT = 2;
 
     private static final int SUCCESS = 1;
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
@@ -52,7 +54,19 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         itemFragment.setUseGridLayout(true);
         GridView gridView = (GridView) findViewById(R.id.gridview_item);
         registerForContextMenu(gridView);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(clickListener);
     }
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intentOutfit = new Intent(MainActivity.this, NewOutfitActivity.class);
+            intentOutfit.putExtra("mode", NEW_OUTFIT);
+            intentOutfit.putExtra("id", 0);
+            startActivityForResult(intentOutfit, NEW_OUTFIT);
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,6 +107,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
                     startActivityForResult(new Intent(this, NewItemActivity.class), NEW_ITEM);
                     return true;
                 }
+                break;
         }
 
         return super.onOptionsItemSelected(item);

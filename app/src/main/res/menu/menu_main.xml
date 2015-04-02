@@ -12,9 +12,9 @@
         android:id="@+id/menu_new_outfit"
         android:icon="@drawable/ic_action_accessibility"
         android:title="@string/action_new_outfit"
-        support:showAsAction="ifRoom"/>
+        support:showAsAction="ifRoom"/-->
 
-    <item
+    <!--item
         android:id="@+id/menu_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"

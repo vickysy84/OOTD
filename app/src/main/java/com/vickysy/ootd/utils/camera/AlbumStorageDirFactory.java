@@ -1,4 +1,4 @@
-package com.vickysy.ootd.utils;
+package com.vickysy.ootd.utils.camera;
 
 import java.io.File;
 

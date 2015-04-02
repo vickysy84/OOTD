@@ -6,8 +6,9 @@
     <color name="grey_700">#646464</color>
     <color name="black">#000000</color>
 
-    <color name="ootd_light_blue">#ff64c2f4</color>
-    <color name="ootd_blue">#ff1ca8f4</color>
-    <color name="ootd_dark_blue">#0288D1</color>
+    <color name="ootd_orange">#FF5722</color>
+    <color name="ootd_orange_divider">#FFAB91</color>
+    <color name="ootd_orange_secondary">#FFCCBC</color>
+    <color name="ootd_orange_disabled">#FBE9E7</color>
 
 </resources>

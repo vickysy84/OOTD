@@ -8,7 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.vickysy.ootd.utils.PhotoUtility;
+import com.vickysy.ootd.utils.camera.PhotoUtility;
 
 
 public class NewItemActivity extends ActionBarActivity {

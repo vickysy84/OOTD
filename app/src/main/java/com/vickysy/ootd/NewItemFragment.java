@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vickysy.ootd.data.OOTDContract;
-import com.vickysy.ootd.utils.PhotoUtility;
+import com.vickysy.ootd.utils.camera.PhotoUtility;
 
 import java.io.IOException;
 

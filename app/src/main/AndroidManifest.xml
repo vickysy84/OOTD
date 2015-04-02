@@ -40,7 +40,11 @@
 
         <activity
             android:name=".NewOutfitActivity"
-            android:label="@string/title_activity_new_outfit" >
+            android:label="@string/title_activity_new_outfit"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
         </activity>
     </application>
 

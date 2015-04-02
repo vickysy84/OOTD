@@ -4,5 +4,7 @@
         android:drawable="@drawable/border_selected" /> <!-- pressed -->
     <item android:state_selected="true"
         android:drawable="@drawable/border_selected" /> <!-- selected -->
+    <item android:state_checked="true"
+        android:drawable="@drawable/border_selected" /> <!-- checked -->
     <item android:drawable="@drawable/border" /> <!-- default -->
 </selector>
