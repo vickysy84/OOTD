@@ -11,4 +11,6 @@
     <color name="ootd_orange_secondary">#FFCCBC</color>
     <color name="ootd_orange_disabled">#FBE9E7</color>
 
+    <color name="collage_bg_color">#FFCCBC</color>
+
 </resources>

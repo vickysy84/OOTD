@@ -1,4 +1,4 @@
-package com.vickysy.ootd;
+package com.vickysy.ootd.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,7 +16,18 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.mig35.injectorlib.utils.inject.InjectSavedState;
+import com.redmadrobot.azoft.collage.data.Collage;
+import com.redmadrobot.azoft.collage.data.CollageFillData;
+import com.redmadrobot.azoft.collage.data.CollageRegionData;
+import com.redmadrobot.azoft.collage.utils.CollageRegion;
+import com.redmadrobot.azoft.collage.utils.collagegenerators.CollageFactory;
+import com.redmadrobot.azoft.collage.utils.collagegenerators.SimpleCollageGenerator;
+import com.vickysy.ootd.R;
+import com.vickysy.ootd.ui.collage.CollagePreviewActivity;
 import com.vickysy.ootd.utils.camera.PhotoUtility;
+
+import java.io.File;
 
 
 public class MainActivity extends ActionBarActivity implements ItemFragment.Callback{
@@ -30,6 +41,12 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
     private boolean mTwoPane;
 
     static final int REQUEST_IMAGE_CAPTURE = 2;
+
+    @InjectSavedState
+    private CollageFillData mCollageFillData;
+
+    private static final CollageFactory COLLAGE_FACTORY = new SimpleCollageGenerator();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +78,20 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intentOutfit = new Intent(MainActivity.this, NewOutfitActivity.class);
-            intentOutfit.putExtra("mode", NEW_OUTFIT);
-            intentOutfit.putExtra("id", 0);
-            startActivityForResult(intentOutfit, NEW_OUTFIT);
+            Collage collage = COLLAGE_FACTORY.getCollage(1);
+            mCollageFillData = new CollageFillData(collage);
+            CollageRegion collageRegion = new CollageRegion(0, 0.01, 0.01, 0.49d, 0.99);
+            File outputFile = new File("/storage/emulated/0/Pictures/pictures/IMG_20150320_233937_-956143189.jpg");
+            final CollageRegionData collageRegionData = new CollageRegionData(outputFile);
+            CollageRegion collageRegion2 = new CollageRegion(1, 0.51d, 0.01, 0.99, 0.99);
+            File outputFile2 = new File("/storage/emulated/0/Pictures/pictures/IMG_20150320_233937_-956143189.jpg");
+            final CollageRegionData collageRegionData2 = new CollageRegionData(outputFile2);
+            mCollageFillData.setRegionData(collageRegion2, collageRegionData2);
+            mCollageFillData.setRegionData(collageRegion, collageRegionData);
+            if (mCollageFillData.hasAllRegions()) {
+                startActivity(new Intent(MainActivity.this, CollagePreviewActivity.class)
+                        .putExtra(CollagePreviewActivity.EXTRA_KOLAJ_FILL_DATA, mCollageFillData));
+            }
         }
     };
 

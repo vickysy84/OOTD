@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.vickysy.ootd.ItemFragment">
+    tools:context="com.vickysy.ootd.ui.ItemFragment">
     <GridView
         style="@style/ItemListStyle"
         android:id="@+id/gridview_item"

@@ -1,4 +1,4 @@
-package com.vickysy.ootd;
+package com.vickysy.ootd.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vickysy.ootd.R;
 import com.vickysy.ootd.data.OOTDContract;
 import com.vickysy.ootd.utils.camera.PhotoUtility;
 

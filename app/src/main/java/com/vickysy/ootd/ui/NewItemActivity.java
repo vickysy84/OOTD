@@ -1,4 +1,4 @@
-package com.vickysy.ootd;
+package com.vickysy.ootd.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.vickysy.ootd.R;
 import com.vickysy.ootd.utils.camera.PhotoUtility;
 
 

@@ -1,4 +1,4 @@
-package com.vickysy.ootd;
+package com.vickysy.ootd.ui;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.vickysy.ootd.R;
 import com.vickysy.ootd.data.OOTDContract;
 
 /**

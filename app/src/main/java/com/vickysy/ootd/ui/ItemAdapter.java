@@ -1,4 +1,4 @@
-package com.vickysy.ootd;
+package com.vickysy.ootd.ui;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.vickysy.ootd.R;
 
 /**
  * Created by vickysy on 3/10/15.
@@ -84,7 +86,6 @@ public class ItemAdapter extends CursorAdapter {
             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
             viewHolder.imagePathView.setImageBitmap(bitmap);
         }
-
     }
 
     public void setUseGridLayout(boolean useGridLayout){

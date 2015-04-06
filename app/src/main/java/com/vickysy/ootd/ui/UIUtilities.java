@@ -1,4 +1,4 @@
-package com.vickysy.ootd;
+package com.vickysy.ootd.ui;
 
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
