@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.vickysy.ootd.R;
@@ -76,7 +79,7 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // The ItemAdapter will take data from a source and
-        // use it to populate the ListView it's attached to.
+        // use it to populate the GridView it's attached to.
         mItemAdapter = new ItemAdapter(getActivity(), null, 0);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -84,27 +87,8 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
         // Get a reference to the ListView, and attach this adapter to it.
         mGridView = (GridView) rootView.findViewById(R.id.gridview_item);
         mGridView.setAdapter(mItemAdapter);
-        // We'll call our MainActivity
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // CursorAdapter returns a cursor at the correct position for getItem(), or null
-                // if it cannot seek to that position.
-                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
-                if (cursor != null) {
-                    ((Callback) getActivity())
-                            .onItemSelected(OOTDContract.ItemEntry.buildItemUriWithId(cursor.getLong(COL_ITEM_ID)));
-                }
-                // add border to the item
-                if (view.isSelected()){
-                    view.setSelected(false);
-                } else {
-                    view.setSelected(true);
-                }
-                mPosition = position;
-            }
-        });
+        mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
+        mGridView.setMultiChoiceModeListener(new MultiChoiceModeListener());
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
@@ -154,4 +138,57 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
             mItemAdapter.setUseGridLayout(mUseGridLayout);
         }
     }
+
+    public class MultiChoiceModeListener implements GridView.MultiChoiceModeListener {
+
+        long selectedId = -1;
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.setTitle("Select Items");
+            mode.setSubtitle("One item selected");
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.menu_item_select, menu);
+            return true;
+        }
+
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return true;
+        }
+
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_delete:
+                   // deleteSelectedItems();
+                    ((MainActivity)getActivity()).deleteSelectedItem(selectedId);
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
+                case R.id.menu_edit:
+                    ((MainActivity)getActivity()).editSelectedItem(selectedId);
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public void onDestroyActionMode(ActionMode mode) {
+        }
+
+        public void onItemCheckedStateChanged(ActionMode mode, int position, long id,
+                                              boolean checked) {
+
+            selectedId = id;
+            int selectCount = mGridView.getCheckedItemCount();
+
+            switch (selectCount) {
+                case 1:
+                    mode.setSubtitle("One item selected");
+                    break;
+                default:
+                    mode.setSubtitle("" + selectCount + " items selected");
+                    break;
+            }
+        }
+
+    }
+
 }

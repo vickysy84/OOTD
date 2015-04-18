@@ -43,9 +43,8 @@
             android:syncable="true" />
 
         <activity
-            android:name=".ui.NewOutfitActivity"
-            android:label="@string/title_activity_new_outfit"
-            android:parentActivityName=".ui.MainActivity" >
+            android:name=".ui.collage.CollageBuilderActivity"
+            android:label="@string/title_collage_builder">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
@@ -53,7 +52,11 @@
 
         <activity
             android:name=".ui.collage.CollagePreviewActivity"
-            android:label="@string/title_collage_preview" />
+            android:label="@string/title_collage_preview">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.collage.CollageBuilderActivity" />
+        </activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

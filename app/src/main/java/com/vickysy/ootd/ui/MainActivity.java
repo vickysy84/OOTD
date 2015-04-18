@@ -1,17 +1,16 @@
 package com.vickysy.ootd.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -24,7 +23,7 @@ import com.redmadrobot.azoft.collage.utils.CollageRegion;
 import com.redmadrobot.azoft.collage.utils.collagegenerators.CollageFactory;
 import com.redmadrobot.azoft.collage.utils.collagegenerators.SimpleCollageGenerator;
 import com.vickysy.ootd.R;
-import com.vickysy.ootd.ui.collage.CollagePreviewActivity;
+import com.vickysy.ootd.ui.collage.CollageBuilderActivity;
 import com.vickysy.ootd.utils.camera.PhotoUtility;
 
 import java.io.File;
@@ -45,8 +44,17 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
     @InjectSavedState
     private CollageFillData mCollageFillData;
 
+    private GridView mGridView;
+
     private static final CollageFactory COLLAGE_FACTORY = new SimpleCollageGenerator();
 
+    static final int COL_ITEM_ID = 0;
+    static final int COL_ITEM_TYPE = 1;
+    static final int COL_IMG_PATH = 2;
+    static final int COL_BRAND = 3;
+    static final int COL_CONDITION = 4;
+    static final int COL_COLOR = 5;
+    static final int COL_MATERIAL = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +77,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
                 .findFragmentById(R.id.fragment_item));
         getSupportActionBar().setElevation(0f);
         itemFragment.setUseGridLayout(true);
-        GridView gridView = (GridView) findViewById(R.id.gridview_item);
-        registerForContextMenu(gridView);
+        mGridView = (GridView) findViewById(R.id.gridview_item);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(clickListener);
     }
@@ -78,19 +85,33 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Collage collage = COLLAGE_FACTORY.getCollage(1);
-            mCollageFillData = new CollageFillData(collage);
-            CollageRegion collageRegion = new CollageRegion(0, 0.01, 0.01, 0.49d, 0.99);
-            File outputFile = new File("/storage/emulated/0/Pictures/pictures/IMG_20150320_233937_-956143189.jpg");
-            final CollageRegionData collageRegionData = new CollageRegionData(outputFile);
-            CollageRegion collageRegion2 = new CollageRegion(1, 0.51d, 0.01, 0.99, 0.99);
-            File outputFile2 = new File("/storage/emulated/0/Pictures/pictures/IMG_20150320_233937_-956143189.jpg");
-            final CollageRegionData collageRegionData2 = new CollageRegionData(outputFile2);
-            mCollageFillData.setRegionData(collageRegion2, collageRegionData2);
-            mCollageFillData.setRegionData(collageRegion, collageRegionData);
-            if (mCollageFillData.hasAllRegions()) {
-                startActivity(new Intent(MainActivity.this, CollagePreviewActivity.class)
-                        .putExtra(CollagePreviewActivity.EXTRA_KOLAJ_FILL_DATA, mCollageFillData));
+            //items selected should not be greater than 9. (maximum capable collage images)
+            if (mGridView.getCheckedItemIds().length < 0 || mGridView.getCheckedItemIds().length > 9) {
+                //return error
+                Toast toast2 = Toast.makeText(MainActivity.this, "Please select 1 to 9 items only.", Toast.LENGTH_SHORT);
+                toast2.show();
+            }
+            else {
+                //get the values selected
+                ItemTask it = new ItemTask(MainActivity.this);
+                Collage collage = COLLAGE_FACTORY.getCollage(mGridView.getCheckedItemIds().length - 1);
+                mCollageFillData = new CollageFillData(collage);
+                Cursor cursor = it.getItems(mGridView.getCheckedItemIds());
+                cursor.moveToPosition(-1);
+                int i = 0;
+                while (cursor.moveToNext()) {
+                    CollageRegion collageRegion = collage.getCollageRegionAtIndex(i);
+                    File outputFile = new File(cursor.getString(COL_IMG_PATH));
+                    CollageRegionData collageRegionData = new CollageRegionData(outputFile);
+                    mCollageFillData.setRegionData(collageRegion, collageRegionData);
+                    i++;
+                }
+                cursor.close();
+
+                if (mCollageFillData.hasAllRegions()) {
+                    startActivity(new Intent(MainActivity.this, CollageBuilderActivity.class)
+                            .putExtra(CollageBuilderActivity.EXTRA_KOLAJ, mCollageFillData));
+                }
             }
         }
     };
@@ -184,46 +205,28 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         }
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_item_long_click, menu);
+    public void deleteSelectedItem(long selectedId) {
+        ItemTask iit = new ItemTask(this);
+        long deletedRows = iit.deleteItem(selectedId);
+        if (deletedRows > 0){
+            Toast toast2 = Toast.makeText(this, "Item Deleted", Toast.LENGTH_SHORT);
+            toast2.show();
+        }
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-        int id = item.getItemId();
-        switch (id) {
-
-            case R.id.menu_edit:
-
-                if (mTwoPane) {
-                    NewItemFragment fragment = NewItemFragment.newInstance(EDIT_ITEM, info.id, true);
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
-                            .commit();
-                } else {
-                    Intent intent = new Intent(this, NewItemActivity.class);
-                    intent.setAction(Intent.ACTION_EDIT);
-                    intent.putExtra("mode", EDIT_ITEM);
-                    intent.putExtra("id", info.id);
-                    startActivityForResult(intent, EDIT_ITEM);
-                }
-                return true;
-            case R.id.menu_delete:
-                ItemTask iit = new ItemTask(this);
-                long deletedRows = iit.deleteItem(info.id);
-                if (deletedRows > 0){
-                    Toast toast2 = Toast.makeText(this, "Item Deleted", Toast.LENGTH_SHORT);
-                    toast2.show();
-                }
-                return true;
+    public void editSelectedItem(long selectedId) {
+        if (mTwoPane) {
+            NewItemFragment fragment = NewItemFragment.newInstance(EDIT_ITEM, selectedId, true);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
+                    .commit();
+        } else {
+            Intent intent = new Intent(this, NewItemActivity.class);
+            intent.setAction(Intent.ACTION_EDIT);
+            intent.putExtra("mode", EDIT_ITEM);
+            intent.putExtra("id", selectedId);
+            startActivityForResult(intent, EDIT_ITEM);
         }
-        return super.onContextItemSelected(item);
     }
 
 }

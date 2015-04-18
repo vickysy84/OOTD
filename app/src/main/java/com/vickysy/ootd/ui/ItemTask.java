@@ -3,6 +3,7 @@ package com.vickysy.ootd.ui;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -16,6 +17,16 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
     private final String LOG_TAG = ItemTask.class.getSimpleName();
 
     private final Context mContext;
+
+    private static final String[] ITEM_COLUMNS = {
+            OOTDContract.ItemEntry.TABLE_NAME + "." + OOTDContract.ItemEntry._ID,
+            OOTDContract.ItemEntry.COLUMN_ITEM_TYPE,
+            OOTDContract.ItemEntry.COLUMN_IMG_PATH,
+            OOTDContract.ItemEntry.COLUMN_BRAND,
+            OOTDContract.ItemEntry.COLUMN_CONDITION,
+            OOTDContract.ItemEntry.COLUMN_COLOR,
+            OOTDContract.ItemEntry.COLUMN_MATERIAL
+    };
 
     public ItemTask(Context context) {
         mContext = context;
@@ -100,7 +111,35 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
         return mRowsUpdated;
     }
 
+    /**
+     * Gets the items with condition
+     * @param itemIds
+     * @return
+     */
+    Cursor getItems(long[] itemIds) {
 
+        String selectClause =  OOTDContract.ItemEntry.TABLE_NAME+
+                "." + OOTDContract.ItemEntry._ID + " IN (";
+        String[] selectionArgs = new String[itemIds.length];
+        for (int i = 0; i < itemIds.length; i++) {
+            selectClause += "?";
+            if (i != itemIds.length -1) {
+                selectClause += ",";
+            }
+            selectionArgs[i] = "" + itemIds[i];
+        }
+        selectClause += ")";
+
+        Cursor cursor = mContext.getContentResolver().query(
+                OOTDContract.ItemEntry.CONTENT_URI,
+                ITEM_COLUMNS,
+                selectClause,
+                selectionArgs,
+                null
+        );
+
+        return cursor;
+    }
 
     @Override
     protected Void doInBackground(String... params) {

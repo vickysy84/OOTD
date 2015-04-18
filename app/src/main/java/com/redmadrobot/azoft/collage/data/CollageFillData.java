@@ -12,8 +12,10 @@ import java.util.Map;
  * Time: 11:40 AM
  *
  * @author MiG35
+ *
+ * Note: added load callback
  */
-public class CollageFillData extends Collage {
+public class CollageFillData extends Collage{
 
 	private static final long serialVersionUID = 9161249919940778595L;
 

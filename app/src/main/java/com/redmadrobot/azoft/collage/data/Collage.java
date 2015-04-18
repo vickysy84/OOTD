@@ -13,6 +13,8 @@ import java.util.List;
  * Time: 4:12 PM
  *
  * @author MiG35
+ *
+ * Note: edited to get collage region at index
  */
 public class Collage implements Serializable {
 
@@ -39,6 +41,10 @@ public class Collage implements Serializable {
 	public int getRegionsCount() {
 		return mRegionsCount;
 	}
+
+    public CollageRegion getCollageRegionAtIndex(int i) {
+        return mCollageRegions.get(i);
+    }
 
 	@Override
 	public boolean equals(final Object o) {

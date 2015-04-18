@@ -5,6 +5,9 @@
     <string name="action_new_outfit">New Outfit</string>
     <string name="action_settings">Settings</string>
     <string name="action_share">Share</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_delete">Delete</string>
+
     <string name="title_activity_new_item">New Item</string>
     <string name="top">Top</string>
     <string name="pants">Pants</string>
@@ -20,17 +23,18 @@
     <string name="accessory">Accessory</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="content_authority">com.vickysy.ootd</string>
 
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
     <string name="title_activity_new_outfit">New Outfit</string>
     <string name="title_collage_preview">New Outfit</string>
+    <string name="title_collage_builder">Collage editor</string>
     <string name="text_image_collage_preview">collageimage.png</string>
     <string name="text_email_subject">Collage</string>
     <string name="text_share_collage">Share</string>
     <string name="text_email_chooser">Share using…</string>
+    <string name="text_preview_collage">Preview</string>
 
     <!--general-->
     <string name="error_internal_server">Failed to connect to server.</string>
