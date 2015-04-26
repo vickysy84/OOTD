@@ -8,11 +8,11 @@
         android:title="@string/action_new"
         support:showAsAction="ifRoom"/>
 
-    <!--item
-        android:id="@+id/menu_new_outfit"
-        android:icon="@drawable/ic_action_accessibility"
-        android:title="@string/action_new_outfit"
-        support:showAsAction="ifRoom"/-->
+    <item
+        android:id="@+id/menu_picture"
+        android:icon="@drawable/ic_action_picture"
+        android:title="@string/action_picture"
+        support:showAsAction="ifRoom"/>
 
     <!--item
         android:id="@+id/menu_settings"

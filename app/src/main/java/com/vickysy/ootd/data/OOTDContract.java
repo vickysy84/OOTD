@@ -26,6 +26,8 @@ public class OOTDContract {
     // as the ContentProvider hasn't been given any information on what to do with "givemeroot".
     // At least, let's hope not.  Don't be that dev, reader.  Don't be that dev.
     public static final String PATH_ITEM = "item";
+    public static final String PATH_OUTFIT = "outfit";
+    public static final String PATH_OUTFIT_ITEM = "outfit_item";
 
 
     /* Inner class that defines the table contents of the item table */
@@ -36,8 +38,6 @@ public class OOTDContract {
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_ITEM;
-        public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_ITEM;
 
         // Table name
         public static final String TABLE_NAME = "item";
@@ -71,6 +71,53 @@ public class OOTDContract {
 
         public static int getItemIdFromUri(Uri uri) {
             return Integer.parseInt(uri.getPathSegments().get(1));
+        }
+    }
+
+    /* Inner class that defines the table contents of the outfit table */
+    public static final class OutfitEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_OUTFIT).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_OUTFIT;
+
+        public static final String TABLE_NAME = "outfit";
+
+        // Outfit name
+        public static final String COLUMN_NAME = "name";
+
+        public static final String COLUMN_CATEGORY = "category";
+
+        public static Uri buildOutfitUriWithId(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+    }
+
+    /* Inner class that defines the table contents of the outfit table */
+    public static final class OutfitItemEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_OUTFIT_ITEM).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_OUTFIT;
+
+        public static final String TABLE_NAME = "outfit_item";
+
+        // Outfit name
+        public static final String COLUMN_ITEM_KEY = "item_id";
+
+        public static final String COLUMN_OUTFIT_KEY = "outfit_id";
+
+        public static Uri buildOutfitUri() {
+            return CONTENT_URI;
+        }
+
+        public static Uri buildOutfitUriWithId(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }
 }

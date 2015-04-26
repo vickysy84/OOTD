@@ -1,4 +1,4 @@
-package com.vickysy.ootd.ui.collage;
+package com.redmadrobot.azoft.collage.ui.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

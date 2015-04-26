@@ -18,9 +18,9 @@ import com.vickysy.ootd.R;
  */
 public class ItemAdapter extends CursorAdapter {
 
-    private static final int VIEW_TYPE_COUNT = 2;
     private static final int VIEW_TYPE_GRID = 0;
     private static final int VIEW_TYPE_LIST = 1;
+    private static final int VIEW_TYPE_COUNT = 2;
 
     // Flag to determine if we want to use a separate view for "grid".
     private boolean mUseGridLayout = true;

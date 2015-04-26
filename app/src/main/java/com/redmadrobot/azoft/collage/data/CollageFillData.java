@@ -12,8 +12,6 @@ import java.util.Map;
  * Time: 11:40 AM
  *
  * @author MiG35
- *
- * Note: added load callback
  */
 public class CollageFillData extends Collage{
 

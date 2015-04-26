@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author MiG35
  *
- * Note: edited to get collage region at index
+ * @author vickysy - edited to get collage region at index
  */
 public class Collage implements Serializable {
 

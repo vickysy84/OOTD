@@ -1,8 +1,9 @@
-package com.vickysy.ootd.ui.collage;
+package com.redmadrobot.azoft.collage.ui.activities;
 
 import android.support.v4.app.Fragment;
 
 import com.redmadrobot.azoft.collage.data.CollageFillData;
+import com.redmadrobot.azoft.collage.ui.fragments.CollagePreviewFragment;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.vickysy.ootd.ui.collage;
+package com.redmadrobot.azoft.collage.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -14,11 +14,12 @@ import com.mig35.loaderlib.utils.ActivityLoaderHelper;
 import com.mig35.loaderlib.utils.ActivityLoaderListener;
 import com.mig35.loaderlib.utils.FragmentToActivityLoaderTaskListener;
 import com.mig35.loaderlib.utils.LoaderHelper;
-import com.redmadrobot.azoft.collage.app.CollageApplication;
+import com.vickysy.ootd.app.OOTDApplication;
 import com.redmadrobot.azoft.collage.exceptions.DiskWriteException;
 import com.redmadrobot.azoft.collage.exceptions.NoHandleInBaseActivityException;
 import com.redmadrobot.azoft.collage.exceptions.NotAllowedException;
 import com.vickysy.ootd.R;
+
 /**
  * Base Activity class with action bar.
  * <p/>
@@ -183,7 +184,7 @@ this method is final in ActionBarActivity, so we should override other content s
 			return;
 		}
 
-		CollageApplication.getInstance().showToast(message, null);
+		OOTDApplication.getInstance().showToast(message, null);
 	}
 
 	private void showToast(final String message, final int gravity) {
@@ -191,7 +192,7 @@ this method is final in ActionBarActivity, so we should override other content s
 			return;
 		}
 
-		CollageApplication.getInstance().showToast(message, gravity);
+		OOTDApplication.getInstance().showToast(message, gravity);
 	}
 
 	@Override

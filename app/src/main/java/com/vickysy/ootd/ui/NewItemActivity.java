@@ -2,6 +2,7 @@ package com.vickysy.ootd.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -11,14 +12,16 @@ import android.view.MenuItem;
 import com.vickysy.ootd.R;
 import com.vickysy.ootd.utils.camera.PhotoUtility;
 
+import java.io.IOException;
+
 
 public class NewItemActivity extends ActionBarActivity {
-
-    private static final String DETAILFRAGMENT_TAG = "DFTAG";
     static final int REQUEST_IMAGE_CAPTURE = 2;
+    static final int REQUEST_IMAGE_GALLERY = 3;
 
     private long id = 0;
     private int mode = 0;
+    private int from = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class NewItemActivity extends ActionBarActivity {
         if (extras2 != null) {
             mode = extras2.getInt("mode");
             id = extras2.getLong("id");
+            from = extras2.getInt("from");
         }
         if (mode == NewItemFragment.NEW_ITEM){
             setTitle("New Item");
@@ -43,15 +47,24 @@ public class NewItemActivity extends ActionBarActivity {
             // check if add
             switch (mode) {
                 case NewItemFragment.NEW_ITEM:
-                    // call camera intent
-                    if (PhotoUtility.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE)) {
-                        dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
-                    } else {
-                        //log error
-                        NewItemFragment fragment = NewItemFragment.newInstance(mode, id, false);
-                        getSupportFragmentManager().beginTransaction()
-                                .add(R.id.fragment_new_item, fragment)
-                                .commit();
+                    switch (from) {
+                        // call camera intent
+                        case MainActivity.FROM_CAMERA: if (PhotoUtility.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE)) {
+                                    dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
+                                } else {
+                                    //log error
+                                    NewItemFragment fragment = NewItemFragment.newInstance(mode, id, false);
+                                    getSupportFragmentManager().beginTransaction()
+                                            .add(R.id.fragment_new_item, fragment)
+                                            .commit();
+                                }
+                            break;
+                        case MainActivity.FROM_GALLERY: Intent intent2 = new Intent();
+                            intent2.setType("image/*");
+                            // intent2.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); //TODO: Allow multiple inserts
+                            intent2.setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(Intent.createChooser(intent2, "Select Picture"), REQUEST_IMAGE_GALLERY);
+                            break;
                     }
                     break;
                 case NewItemFragment.EDIT_ITEM:
@@ -87,9 +100,24 @@ public class NewItemActivity extends ActionBarActivity {
                     .commit();
         } else if ( requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_CANCELED) {
             this.finish();
+        } else if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
+            // TODO: check if multiple images were selected
+            Uri uri = data.getData();
+
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            NewItemFragment fragment = NewItemFragment.newInstance(mode, id, bitmap, false);
+            getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_new_item, fragment)
+                        .commit();
+        } else if ( requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_CANCELED) {
+            this.finish();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

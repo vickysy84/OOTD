@@ -4,20 +4,23 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="@drawable/border"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:layout_margin="@dimen/activity_vertical_margin"
     android:layout_centerInParent="true"
-    android:padding="5px"
+    android:padding="1px"
     tools:context="com.vickysy.ootd.ui.ItemFragment" >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/image_width"
+        android:layout_height="@dimen/image_height"
         android:id="@+id/thumbnailImageView"
         android:layout_centerHorizontal="true"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_horizontal|bottom"
+        tools:src="@drawable/ic_action_picture"/>
 
     <TextView
         android:id="@+id/list_item_type_view"

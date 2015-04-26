@@ -191,7 +191,7 @@ public class CollageItemView extends ImageView {
 
 		if (null == mRegionData) {
 			mNeedInit = false;
-			setImageResource(R.drawable.ic_action_new);
+    		setImageResource(R.drawable.ic_action_new);
 		}
 		else {
 			final int width = getWidth();

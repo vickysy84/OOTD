@@ -17,7 +17,7 @@ import java.io.OutputStream;
  *
  * @author MiG35
  *
- * Note: edited to storage_authority for com.vickysy.ootd.contentproviders.media
+ * @author vickysy edited to storage_authority for com.vickysy.ootd.contentproviders.media
  */
 public final class MediaUtils {
 

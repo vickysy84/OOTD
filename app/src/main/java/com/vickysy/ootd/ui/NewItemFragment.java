@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.vickysy.ootd.R;
 import com.vickysy.ootd.data.OOTDContract;
+import com.vickysy.ootd.service.ItemTask;
 import com.vickysy.ootd.utils.camera.PhotoUtility;
 
 import java.io.IOException;
@@ -150,7 +151,6 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(takePictureIntent, actionCode);
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -331,7 +331,13 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
             if (mImageBitmap == null) {
                 String imgPath = data.getString(COL_IMG_PATH);
                 mImageBitmap = BitmapFactory.decodeFile(imgPath);
+               /* Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+                CollageRegion collageRegion = new CollageRegion(0, 0.01, 0.01, 0.99, 0.99);
+                File outputFile = new File(imgPath);
+                CollageRegionData collageRegionData = new CollageRegionData(outputFile);
+                mImageView.setRegionData(collageRegion, collageRegionData);*/
             }
+
             mImageView.setImageBitmap(mImageBitmap);
 
             String brand = data.getString(COL_BRAND);

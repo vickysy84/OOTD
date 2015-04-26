@@ -1,4 +1,4 @@
-package com.vickysy.ootd.ui.collage;
+package com.redmadrobot.azoft.collage.ui.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import com.redmadrobot.azoft.collage.data.CollageRegionData;
 import com.redmadrobot.azoft.collage.ui.widgets.CollageViewGroup;
 import com.redmadrobot.azoft.collage.utils.CollageRegion;
 import com.vickysy.ootd.R;
+import com.redmadrobot.azoft.collage.ui.activities.CollagePreviewActivity;
 
 /**
  * Will show collage and performs all actions for its filling.

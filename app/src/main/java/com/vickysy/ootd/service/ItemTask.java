@@ -1,4 +1,4 @@
-package com.vickysy.ootd.ui;
+package com.vickysy.ootd.service;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import com.vickysy.ootd.data.OOTDContract;
 
 /**
+ * Adds, Edits, Deletes, and Bulk inserts Fashion items.
  * Created by vickysy on 3/10/15.
  */
 public class ItemTask extends AsyncTask<String, Void, Void> {
@@ -40,7 +41,7 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
      * @param itemType
      * @return the row ID of the added item.
      */
-    long addItem(String itemType, String imagePath, String brand, String condition, String color, String material) {
+    public long addItem(String itemType, String imagePath, String brand, String condition, String color, String material) {
         long itemId;
         ContentValues itemValues = new ContentValues();
         itemValues.put(OOTDContract.ItemEntry.COLUMN_ITEM_TYPE, itemType);
@@ -63,7 +64,7 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
      * @param itemId
      * @return the rows deleted.
      */
-    int deleteItem(long itemId) {
+    public int deleteItem(long itemId) {
 
         String mSelectionClause = OOTDContract.ItemEntry._ID+ " = ?";
         String[] mSelectionArgs = {"" + itemId};
@@ -86,7 +87,7 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
      * @param itemId
      * @return the rows deleted.
      */
-    int editItem(long itemId, String itemType,  String imagePath, String brand, String condition, String color, String material) {
+    public int editItem(long itemId, String itemType,  String imagePath, String brand, String condition, String color, String material) {
         String mSelectionClause = OOTDContract.ItemEntry._ID+ " = ?";
         String[] mSelectionArgs = {"" + itemId};
 
@@ -116,7 +117,7 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
      * @param itemIds
      * @return
      */
-    Cursor getItems(long[] itemIds) {
+    public Cursor getItems(long[] itemIds) {
 
         String selectClause =  OOTDContract.ItemEntry.TABLE_NAME+
                 "." + OOTDContract.ItemEntry._ID + " IN (";

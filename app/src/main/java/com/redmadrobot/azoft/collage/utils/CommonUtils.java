@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.os.Environment;
 
 import com.mig35.loaderlib.exceptions.NoNetworkException;
-import com.redmadrobot.azoft.collage.app.CollageApplication;
+import com.vickysy.ootd.app.OOTDApplication;
 import com.redmadrobot.azoft.collage.exceptions.DiskWriteException;
 import com.redmadrobot.azoft.collage.exceptions.InternalServerException;
 import com.vickysy.ootd.R;
@@ -27,7 +27,7 @@ public final class CommonUtils {
 	public static File getCacheFileDir() {
 		File rootCacheDir = null;
 		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-			rootCacheDir = CollageApplication.getInstance().getExternalCacheDir();
+			rootCacheDir = OOTDApplication.getInstance().getExternalCacheDir();
 		}
 		if (checkAndCreateDirIfNotExists(rootCacheDir)) {
 			return rootCacheDir;
@@ -41,7 +41,7 @@ public final class CommonUtils {
 	}
 
 	public static File getInternalCacheDir() {
-		final File rootCacheDir = CollageApplication.getInstance().getCacheDir();
+		final File rootCacheDir = OOTDApplication.getInstance().getCacheDir();
 
 		if (checkAndCreateDirIfNotExists(rootCacheDir)) {
 			return rootCacheDir;
@@ -51,7 +51,7 @@ public final class CommonUtils {
 	}
 
 	public static File getInternalFilesDir() {
-		final File rootFilesDir = CollageApplication.getInstance().getFilesDir();
+		final File rootFilesDir = OOTDApplication.getInstance().getFilesDir();
 
 		if (checkAndCreateDirIfNotExists(rootFilesDir)) {
 			return rootFilesDir;
@@ -80,7 +80,7 @@ public final class CommonUtils {
 	 * @throws java.io.IOException if no network found
 	 */
 	public static void checkInternet() throws IOException {
-		final ConnectivityManager cm = (ConnectivityManager) CollageApplication.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+		final ConnectivityManager cm = (ConnectivityManager) OOTDApplication.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
 		final NetworkInfo netInfo = cm.getActiveNetworkInfo();
 		if (netInfo == null || !netInfo.isConnectedOrConnecting()) {
 			throw new NoNetworkException();

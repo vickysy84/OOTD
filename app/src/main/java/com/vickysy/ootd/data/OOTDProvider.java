@@ -2,12 +2,17 @@ package com.vickysy.ootd.data;
 
 import android.annotation.TargetApi;
 import android.content.ContentProvider;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.ContentValues;
+import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+
+import java.util.ArrayList;
 
 /**
  * Created by vickysy on 3/10/15.
@@ -20,6 +25,7 @@ public class OOTDProvider extends ContentProvider {
 
     static final int ITEM = 100;
     static final int ITEM_WITH_ID = 101;
+    static final int OUTFIT = 102;
 
     private static final SQLiteQueryBuilder sItemByIdQueryBuilder;
 
@@ -118,6 +124,15 @@ public class OOTDProvider extends ContentProvider {
         return retCursor;
     }
 
+    @Override
+    public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
+            throws OperationApplicationException {
+
+
+
+        return null;
+    }
+
     /*
         Student: Add the ability to insert Items to the implementation of this function.
      */
@@ -134,6 +149,32 @@ public class OOTDProvider extends ContentProvider {
                     returnUri = OOTDContract.ItemEntry.buildItemUriWithId(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
+            case OUTFIT: {
+                db.beginTransaction();
+                try{
+                    ContentValues outfitValues = (ContentValues)values.get("outfitValues");
+                    long _id = db.insert(OOTDContract.OutfitEntry.TABLE_NAME, null, values);
+                    ContentValues[] itemValues = (ContentValues[])values.get("itemValues");
+                    if ( _id > 0 ) {
+                        returnUri = OOTDContract.OutfitEntry.buildOutfitUriWithId(_id);
+                        // TODO: loop all the items in outfit and add to outfit_items table
+                        int returnCount = 0;
+                        for (ContentValues value : itemValues) {
+                            long _oi_id = db.insert(OOTDContract.OutfitItemEntry.TABLE_NAME, null, value);
+                            if (_oi_id != -1) {
+                                returnCount++;
+                            }
+                        }
+                    }
+                    else
+                        throw new android.database.SQLException("Failed to insert row into " + uri);
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
                 break;
             }
             default:

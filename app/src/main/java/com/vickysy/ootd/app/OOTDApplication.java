@@ -1,4 +1,4 @@
-package com.redmadrobot.azoft.collage.app;
+package com.vickysy.ootd.app;
 
 import android.app.Application;
 import android.os.Handler;
@@ -8,14 +8,11 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 /**
- * Date: 4/7/2014
- * Time: 3:57 PM
- *
- * @author MiG35
+ * @author vickysy
  */
-public class CollageApplication extends Application {
+public class OOTDApplication extends Application {
 
-	private static CollageApplication sInstance;
+	private static OOTDApplication sInstance;
 
 	private Toast mOldToast;
 	private Handler mHandler;
@@ -31,7 +28,7 @@ public class CollageApplication extends Application {
 		picasso.setDebugging(false);
 	}
 
-	public static CollageApplication getInstance() {
+	public static OOTDApplication getInstance() {
 		return sInstance;
 	}
 

@@ -1,8 +1,9 @@
-package com.vickysy.ootd.ui.collage;
+package com.redmadrobot.azoft.collage.ui.fragments;
 
 import android.app.Activity;
 
 import com.mig35.loaderlib.ui.LoaderFragment;
+import com.redmadrobot.azoft.collage.ui.activities.CollageActivity;
 
 /**
  * Base fragment. Can be used <strong>only</strong> with CollageActivity.

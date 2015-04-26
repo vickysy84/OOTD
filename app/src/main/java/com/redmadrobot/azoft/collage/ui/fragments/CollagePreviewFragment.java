@@ -1,4 +1,4 @@
-package com.vickysy.ootd.ui.collage;
+package com.redmadrobot.azoft.collage.ui.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

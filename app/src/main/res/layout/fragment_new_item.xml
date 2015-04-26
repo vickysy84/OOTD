@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 <GridLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
 
@@ -41,8 +45,10 @@
         android:layout_row="1"
         android:layout_column="2"
         android:visibility="visible"
+        android:adjustViewBounds="true"
         android:minHeight="120dp"
-        android:minWidth="120dp"/>
+        android:maxHeight="120dp"
+        android:height="120dp"/>
 
     <Space
         android:layout_width="120px"
@@ -143,3 +149,4 @@
         android:id="@+id/submit"
         />
 </GridLayout>
+</ScrollView>

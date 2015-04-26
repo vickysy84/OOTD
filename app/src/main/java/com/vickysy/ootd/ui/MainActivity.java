@@ -1,6 +1,7 @@
 package com.vickysy.ootd.ui;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -19,27 +20,31 @@ import com.mig35.injectorlib.utils.inject.InjectSavedState;
 import com.redmadrobot.azoft.collage.data.Collage;
 import com.redmadrobot.azoft.collage.data.CollageFillData;
 import com.redmadrobot.azoft.collage.data.CollageRegionData;
+import com.redmadrobot.azoft.collage.ui.activities.CollageBuilderActivity;
 import com.redmadrobot.azoft.collage.utils.CollageRegion;
 import com.redmadrobot.azoft.collage.utils.collagegenerators.CollageFactory;
 import com.redmadrobot.azoft.collage.utils.collagegenerators.SimpleCollageGenerator;
 import com.vickysy.ootd.R;
-import com.vickysy.ootd.ui.collage.CollageBuilderActivity;
+import com.vickysy.ootd.service.ItemTask;
 import com.vickysy.ootd.utils.camera.PhotoUtility;
 
 import java.io.File;
+import java.io.IOException;
 
 
 public class MainActivity extends ActionBarActivity implements ItemFragment.Callback{
 
     private static final int NEW_ITEM = 0;
     private static final int EDIT_ITEM = 1;
-    private static final int NEW_OUTFIT = 2;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
+    private static final int REQUEST_IMAGE_GALLERY = 3;
 
     private static final int SUCCESS = 1;
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
-    private boolean mTwoPane;
 
-    static final int REQUEST_IMAGE_CAPTURE = 2;
+    static final int FROM_CAMERA = 0;
+    static final int FROM_GALLERY = 1;
+    private boolean mTwoPane;
 
     @InjectSavedState
     private CollageFillData mCollageFillData;
@@ -62,6 +67,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         setContentView(R.layout.activity_main);
         if (findViewById(R.id.fragment_new_item) != null) {
             mTwoPane = true;
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             if (savedInstanceState == null) {
                 NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, true);
                     getSupportFragmentManager().beginTransaction()
@@ -85,8 +91,9 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             //items selected should not be greater than 9. (maximum capable collage images)
-            if (mGridView.getCheckedItemIds().length < 0 || mGridView.getCheckedItemIds().length > 9) {
+            if (mGridView.getCheckedItemIds().length <= 0 || mGridView.getCheckedItemIds().length > 9) {
                 //return error
                 Toast toast2 = Toast.makeText(MainActivity.this, "Please select 1 to 9 items only.", Toast.LENGTH_SHORT);
                 toast2.show();
@@ -116,6 +123,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         }
     };
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -123,12 +131,10 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         return true;
     }
 
-
     private void dispatchTakePictureIntent(int actionCode) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(takePictureIntent, actionCode);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -136,7 +142,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         switch (id) {
 
             case R.id.menu_new:
-                //
+
                 if (mTwoPane) {
                     //dispatch camera
                     if (PhotoUtility.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE)) {
@@ -156,6 +162,23 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
                     return true;
                 }
                 break;
+            case R.id.menu_picture :
+                if (mTwoPane) {
+                    //call gallery
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_IMAGE_GALLERY);
+                } else {
+                    Intent intent = new Intent(this, NewItemActivity.class);
+                    intent.setAction(Intent.ACTION_INSERT);
+                    intent.putExtra("mode", NEW_ITEM);
+                    intent.putExtra("id", (long)0);
+                    intent.putExtra("from", FROM_GALLERY);
+                    startActivityForResult(intent, NEW_ITEM);
+                    return true;
+                }
         }
 
         return super.onOptionsItemSelected(item);
@@ -178,6 +201,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             df.onItemEdit();
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -203,6 +227,21 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
                     .add(R.id.fragment_new_item, fragment)
                     .commit();
         }
+        else if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
+            // TODO: check if multiple images were selected
+            Uri uri = data.getData();
+
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, bitmap, false);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_new_item, fragment)
+                    .commit();
+        }
     }
 
     public void deleteSelectedItem(long selectedId) {
@@ -213,6 +252,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             toast2.show();
         }
     }
+
 
     public void editSelectedItem(long selectedId) {
         if (mTwoPane) {

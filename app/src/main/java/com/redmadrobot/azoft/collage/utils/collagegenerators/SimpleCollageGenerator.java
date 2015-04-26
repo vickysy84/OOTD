@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author MiG35
  *
- * Note: vickysy edited to support up to 9 images
+ * @author vickysy edited to support up to 9 images
  */
 public final class SimpleCollageGenerator implements CollageFactory {
 

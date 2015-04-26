@@ -27,6 +27,7 @@
 
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
+    <string name="action_picture">Picture</string>
     <string name="title_activity_new_outfit">New Outfit</string>
     <string name="title_collage_preview">New Outfit</string>
     <string name="title_collage_builder">Collage editor</string>

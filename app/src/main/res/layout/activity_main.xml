@@ -4,5 +4,4 @@
     android:name="com.vickysy.ootd.ui.ItemFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.vickysy.ootd.ui.ItemFragment"
-    tools:layout="@android:layout/list_content" />
+    tools:context="com.vickysy.ootd.ui.ItemFragment"/>
