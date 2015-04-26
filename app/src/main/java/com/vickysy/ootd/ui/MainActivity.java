@@ -219,28 +219,31 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             Toast toast3 = Toast.makeText(this, "Item Edited", Toast.LENGTH_SHORT);
             toast3.show();
         }
-        else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, imageBitmap, false);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_new_item, fragment)
-                    .commit();
-        }
-        else if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
-            // TODO: check if multiple images were selected
-            Uri uri = data.getData();
-
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            } catch (IOException e) {
-                e.printStackTrace();
+        else if (mTwoPane){
+            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                // set image bitmap to new item fragment
+                NewItemFragment df = (NewItemFragment)getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
+                if ( null != df ) {
+                    df.setImageBitmap(imageBitmap);
+                }
             }
-            NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, bitmap, false);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_new_item, fragment)
-                    .commit();
+            else if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
+                // TODO: check if multiple images were selected
+                Uri uri = data.getData();
+
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    NewItemFragment df = (NewItemFragment)getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
+                    if ( null != df ) {
+                        df.setImageBitmap(bitmap);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

@@ -159,15 +159,19 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == getActivity().RESULT_OK) {
             Bundle extras = data.getExtras();
-            mImageBitmap = (Bitmap) extras.get("data");
-            getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    mImageView.setImageDrawable(null);
-                    mImageView.setImageBitmap(mImageBitmap);
-                    mImageView.invalidate();
-                }
-            });
+            setImageBitmap((Bitmap) extras.get("data"));
         }
+    }
+
+    void setImageBitmap(final Bitmap bitmap) {
+        mImageBitmap = bitmap;
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                mImageView.setImageDrawable(null);
+                mImageView.setImageBitmap(bitmap);
+                mImageView.invalidate();
+            }
+        });
     }
 
     @Override
@@ -331,11 +335,6 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
             if (mImageBitmap == null) {
                 String imgPath = data.getString(COL_IMG_PATH);
                 mImageBitmap = BitmapFactory.decodeFile(imgPath);
-               /* Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-                CollageRegion collageRegion = new CollageRegion(0, 0.01, 0.01, 0.99, 0.99);
-                File outputFile = new File(imgPath);
-                CollageRegionData collageRegionData = new CollageRegionData(outputFile);
-                mImageView.setRegionData(collageRegion, collageRegionData);*/
             }
 
             mImageView.setImageBitmap(mImageBitmap);
