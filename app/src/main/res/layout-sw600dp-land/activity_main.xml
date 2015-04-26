@@ -11,6 +11,13 @@
     This layout is a two-pane layout for the Items master/detail flow.
     -->
 
+    <FrameLayout
+        android:id="@+id/fragment_new_item"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="50" />
+
+
     <fragment
         android:id="@+id/fragment_item"
         android:name="com.vickysy.ootd.ui.ItemFragment"
@@ -18,11 +25,5 @@
         android:layout_height="match_parent"
         tools:layout="@android:layout/list_content"
         android:layout_weight="50"/>
-
-    <FrameLayout
-        android:id="@+id/fragment_new_item"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="50" />
 
 </LinearLayout>
