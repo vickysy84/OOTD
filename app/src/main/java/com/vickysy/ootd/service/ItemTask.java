@@ -81,6 +81,30 @@ public class ItemTask extends AsyncTask<String, Void, Void> {
         return mRowsDeleted;
     }
 
+    public int deleteItems(long[] itemIds) {
+        String mSelectionClause = OOTDContract.ItemEntry._ID+ " IN (";
+        String[] mSelectionArgs = new String[itemIds.length];
+        for (int i = 0; i < itemIds.length; i++) {
+            mSelectionClause += "?";
+            if (i != itemIds.length -1) {
+                mSelectionClause += ",";
+            }
+            mSelectionArgs[i] = "" + itemIds[i];
+        }
+        mSelectionClause += ")";
+
+        // Defines a variable to contain the number of rows deleted
+        int mRowsDeleted = 0;
+
+        mRowsDeleted = mContext.getContentResolver().delete(
+                OOTDContract.ItemEntry.CONTENT_URI,
+                mSelectionClause,                       // the column to select on
+                mSelectionArgs                          // the value to compare to
+        );
+
+        return mRowsDeleted;
+    }
+
     /**
      * Helper method to handle deletion of an item in the OOTD database.
      *

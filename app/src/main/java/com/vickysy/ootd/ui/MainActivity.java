@@ -254,6 +254,20 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         }
     }
 
+    public void deleteSelectedItems(long[] selectedIds) {
+        if (selectedIds.length <= 0) {
+            //return error
+            Crouton.makeText(MainActivity.this, "Please select 1 or more items.", Style.ALERT).show();
+        }
+        else {
+            ItemTask iit = new ItemTask(this);
+            long deletedRows = iit.deleteItems(selectedIds);
+            if (deletedRows > 0) {
+                Crouton.makeText(this, "Items Deleted", Style.INFO).show();
+            }
+        }
+    }
+
 
     public void editSelectedItem(long selectedId) {
         if (mTwoPane) {

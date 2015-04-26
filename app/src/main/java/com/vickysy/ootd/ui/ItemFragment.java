@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.vickysy.ootd.R;
@@ -89,6 +90,25 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
         mGridView.setAdapter(mItemAdapter);
         mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
         mGridView.setMultiChoiceModeListener(new MultiChoiceModeListener());
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                // CursorAdapter returns a cursor at the correct position for getItem(), or null
+                // if it cannot seek to that position.
+                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
+                if (cursor != null) {
+                    ((MainActivity)getActivity()).editSelectedItem(cursor.getLong(COL_ITEM_ID));
+                }
+                // add border to the item
+                if (view.isSelected()){
+                    view.setSelected(false);
+                } else {
+                    view.setSelected(true);
+                }
+                mPosition = position;
+            }
+        });
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
@@ -157,8 +177,7 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_delete:
-                   // deleteSelectedItems();
-                    ((MainActivity)getActivity()).deleteSelectedItem(selectedId);
+                    ((MainActivity)getActivity()).deleteSelectedItems(mGridView.getCheckedItemIds());
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 case R.id.menu_edit:
