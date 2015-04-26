@@ -14,11 +14,14 @@ import com.mig35.loaderlib.utils.ActivityLoaderHelper;
 import com.mig35.loaderlib.utils.ActivityLoaderListener;
 import com.mig35.loaderlib.utils.FragmentToActivityLoaderTaskListener;
 import com.mig35.loaderlib.utils.LoaderHelper;
-import com.vickysy.ootd.app.OOTDApplication;
 import com.redmadrobot.azoft.collage.exceptions.DiskWriteException;
 import com.redmadrobot.azoft.collage.exceptions.NoHandleInBaseActivityException;
 import com.redmadrobot.azoft.collage.exceptions.NotAllowedException;
 import com.vickysy.ootd.R;
+import com.vickysy.ootd.app.OOTDApplication;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
  * Base Activity class with action bar.
@@ -148,16 +151,16 @@ this method is final in ActionBarActivity, so we should override other content s
 	public void onLoaderError(final int id, final Exception exception) {
 		// general base activity exception handle
 		if (exception instanceof NoNetworkException) {
-			showToast(R.string.error_no_network);
+            Crouton.makeText(this, R.string.error_no_network, Style.ALERT).show();
 		}
 		else if (exception instanceof NotAllowedException) {
-			showToast(R.string.error_not_allowed);
+			Crouton.makeText(this, R.string.error_not_allowed, Style.ALERT).show();
 		}
 		else if (exception instanceof DiskWriteException) {
-			showToast(R.string.error_disk_error);
+			Crouton.makeText(this, R.string.error_disk_error, Style.ALERT).show();
 		}
 		else if (!(exception instanceof NoHandleInBaseActivityException)) {
-			showToast(R.string.error_unknown);
+			Crouton.makeText(this, R.string.error_unknown, Style.ALERT).show();
 		}
 	}
 
@@ -169,10 +172,6 @@ this method is final in ActionBarActivity, so we should override other content s
 //			return true;
 //		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	public void showToast(final int toastMessage, final int gravity) {
-		showToast(getString(toastMessage), gravity);
 	}
 
 	public void showToast(final int toastMessage) {

@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.mig35.injectorlib.utils.inject.InjectSavedState;
@@ -30,6 +29,9 @@ import com.vickysy.ootd.utils.camera.PhotoUtility;
 
 import java.io.File;
 import java.io.IOException;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 
 public class MainActivity extends ActionBarActivity implements ItemFragment.Callback{
@@ -95,8 +97,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             //items selected should not be greater than 9. (maximum capable collage images)
             if (mGridView.getCheckedItemIds().length <= 0 || mGridView.getCheckedItemIds().length > 9) {
                 //return error
-                Toast toast2 = Toast.makeText(MainActivity.this, "Please select 1 to 9 items only.", Toast.LENGTH_SHORT);
-                toast2.show();
+                Crouton.makeText(MainActivity.this, "Please select 1 to 9 items only.", Style.ALERT).show();
             }
             else {
                 //get the values selected
@@ -211,13 +212,11 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         if(requestCode == NEW_ITEM && resultCode == SUCCESS)
         {
             // new item success
-            Toast toast2 = Toast.makeText(this, "New Item Added", Toast.LENGTH_SHORT);
-            toast2.show();
+            Crouton.makeText(this, "New Item Added", Style.INFO).show();
         }
         else if (requestCode == EDIT_ITEM && resultCode == SUCCESS) {
-            // new item success
-            Toast toast3 = Toast.makeText(this, "Item Edited", Toast.LENGTH_SHORT);
-            toast3.show();
+            // edit item success
+            Crouton.makeText(this, "Item Edited", Style.INFO).show();
         }
         else if (mTwoPane){
             if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -251,8 +250,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         ItemTask iit = new ItemTask(this);
         long deletedRows = iit.deleteItem(selectedId);
         if (deletedRows > 0){
-            Toast toast2 = Toast.makeText(this, "Item Deleted", Toast.LENGTH_SHORT);
-            toast2.show();
+            Crouton.makeText(this, "Item Deleted", Style.INFO).show();
         }
     }
 

@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vickysy.ootd.R;
 import com.vickysy.ootd.data.OOTDContract;
@@ -28,6 +27,9 @@ import com.vickysy.ootd.service.ItemTask;
 import com.vickysy.ootd.utils.camera.PhotoUtility;
 
 import java.io.IOException;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 
 /**
@@ -252,19 +254,22 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        // add item to db
+                        long itemId = iTask.addItem(itemTypeSpinner.getSelectedItem().toString(), imagePath, brandText.getText().toString(),
+                                conditionText.getText().toString(), colorText.getText().toString(), materialText.getText().toString());
+                        Intent intentMessage = new Intent();
+                        intentMessage.putExtra("MESSAGE", "Success");
+                        getActivity().setResult(itemId > 0?1:0, intentMessage);
+                        if (!mTwoPane) {
+                            getActivity().finish();
+                        } else if (itemId > 0) {
+                            Crouton.makeText(getActivity(), "New Item Added", Style.INFO).show();
+                        }
                     }
-                    // add item to db
-                    long itemId = iTask.addItem(itemTypeSpinner.getSelectedItem().toString(), imagePath, brandText.getText().toString(),
-                            conditionText.getText().toString(), colorText.getText().toString(), materialText.getText().toString());
-                    Intent intentMessage = new Intent();
-                    intentMessage.putExtra("MESSAGE", "Success");
-                    getActivity().setResult(itemId > 0?1:0, intentMessage);
-                    if (!mTwoPane) {
-                        getActivity().finish();
-                    } else if (itemId > 0) {
-                        Toast toast2 = Toast.makeText(getActivity(), "New Item Added", Toast.LENGTH_SHORT);
-                        toast2.show();
+                    else {
+                        Crouton.makeText(getActivity(), "Please enter image.", Style.INFO).show();
                     }
+
                     break;
                 case EDIT_ITEM :
                     String imagePath2 = "";
@@ -283,8 +288,7 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
                     if (!mTwoPane) {
                         getActivity().finish();
                     } else if (count > 0) {
-                        Toast toast3 = Toast.makeText(getActivity(), "Item Edited", Toast.LENGTH_SHORT);
-                        toast3.show();
+                        Crouton.makeText(getActivity(), "Item Edited", Style.INFO).show();
                     }
                     break;
                 default:
