@@ -13,10 +13,4 @@
         android:icon="@drawable/ic_action_picture"
         android:title="@string/action_picture"
         support:showAsAction="ifRoom"/>
-
-    <!--item
-        android:id="@+id/menu_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        support:showAsAction="never" /-->
 </menu>

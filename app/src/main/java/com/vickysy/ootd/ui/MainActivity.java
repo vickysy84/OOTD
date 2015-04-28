@@ -180,6 +180,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
                     startActivityForResult(intent, NEW_ITEM);
                     return true;
                 }
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -246,14 +247,6 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         }
     }
 
-    public void deleteSelectedItem(long selectedId) {
-        ItemTask iit = new ItemTask(this);
-        long deletedRows = iit.deleteItem(selectedId);
-        if (deletedRows > 0){
-            Crouton.makeText(this, "Item Deleted", Style.INFO).show();
-        }
-    }
-
     public void deleteSelectedItems(long[] selectedIds) {
         if (selectedIds.length <= 0) {
             //return error
@@ -263,7 +256,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             ItemTask iit = new ItemTask(this);
             long deletedRows = iit.deleteItems(selectedIds);
             if (deletedRows > 0) {
-                Crouton.makeText(this, "Items Deleted", Style.INFO).show();
+                Crouton.makeText(this, "Item" + (deletedRows>1?"s":"") + " Deleted", Style.INFO).show();
             }
         }
     }

@@ -9,7 +9,7 @@
     <dimen name="add_button_margin">16dp</dimen>
     <dimen name="image_width">120dp</dimen>
     <dimen name="image_height">120dp</dimen>
-    <dimen name="new_item_image_width">300dp</dimen>
-    <dimen name="new_item_image_height">300dp</dimen>
+    <dimen name="new_item_image_width">200dp</dimen>
+    <dimen name="new_item_image_height">200dp</dimen>
 
 </resources>

@@ -11,7 +11,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -37,12 +39,13 @@ import de.keyboardsurfer.android.widget.crouton.Style;
  * Use the {@link NewItemFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewItemFragment extends Fragment implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>{
+public class NewItemFragment extends Fragment implements PopupMenu.OnMenuItemClickListener, View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>{
 
     static final String ITEM_URI = "URI";
     private Uri mUri;
 
     static final int REQUEST_IMAGE_CAPTURE = 2;
+    static final int REQUEST_IMAGE_GALLERY = 3;
 
     private static final int ITEM_LOADER = 0;
 
@@ -148,12 +151,6 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
         }
     }
 
-    private void dispatchTakePictureIntent(int actionCode) {
-
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(takePictureIntent, actionCode);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -162,7 +159,19 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == getActivity().RESULT_OK) {
             Bundle extras = data.getExtras();
             setImageBitmap((Bitmap) extras.get("data"));
+        }  else if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == getActivity().RESULT_OK) {
+            // TODO: check if multiple images were selected
+            Uri uri = data.getData();
+
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     void setImageBitmap(final Bitmap bitmap) {
@@ -200,9 +209,11 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
             public boolean onLongClick(View v) {
                 // take photo and set to mImageView
                 // call camera intent
-                if (PhotoUtility.isIntentAvailable(getActivity(), MediaStore.ACTION_IMAGE_CAPTURE)) {
-                    dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
-                }
+                PopupMenu popupMenu = new PopupMenu(getActivity(), v);
+                popupMenu.setOnMenuItemClickListener(NewItemFragment.this);
+                popupMenu.inflate(R.menu.menu_photo_chooser);
+                popupMenu.show();
+
                 return true;
             }
         } );
@@ -228,11 +239,9 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
 
         switch (action) {
             case NEW_ITEM: submitButton.setText("Submit");
-                frameTitleView.setText("New Item");
                 mImageView.setImageBitmap(mImageBitmap);
                 break;
             case EDIT_ITEM: submitButton.setText("Save");
-                frameTitleView.setText("Edit Item");
                 break;
         }
 
@@ -360,5 +369,38 @@ public class NewItemFragment extends Fragment implements View.OnClickListener, L
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+
+    /**
+     * Photo chooser menu
+     * Camera or Photo gallery
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_camera:
+                if (PhotoUtility.isIntentAvailable(getActivity(), MediaStore.ACTION_IMAGE_CAPTURE)) {
+                    dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
+                }
+                return true;
+            case R.id.item_gallery:
+                Intent intent2 = new Intent();
+                intent2.setType("image/*");
+                // intent2.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); //TODO: Allow multiple inserts
+                intent2.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent2, "Select Picture"), REQUEST_IMAGE_GALLERY);
+                return true;
+        }
+
+        return false;
+    }
+
+
+    private void dispatchTakePictureIntent(int actionCode) {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePictureIntent, actionCode);
     }
 }

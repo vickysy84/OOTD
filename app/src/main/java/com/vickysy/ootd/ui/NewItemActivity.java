@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import com.vickysy.ootd.R;
 import com.vickysy.ootd.utils.camera.PhotoUtility;
@@ -49,7 +48,8 @@ public class NewItemActivity extends ActionBarActivity {
                 case NewItemFragment.NEW_ITEM:
                     switch (from) {
                         // call camera intent
-                        case MainActivity.FROM_CAMERA: if (PhotoUtility.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE)) {
+                        case MainActivity.FROM_CAMERA:
+                                if (PhotoUtility.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE)) {
                                     dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
                                 } else {
                                     //log error
@@ -59,7 +59,8 @@ public class NewItemActivity extends ActionBarActivity {
                                             .commit();
                                 }
                             break;
-                        case MainActivity.FROM_GALLERY: Intent intent2 = new Intent();
+                        case MainActivity.FROM_GALLERY:
+                            Intent intent2 = new Intent();
                             intent2.setType("image/*");
                             // intent2.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); //TODO: Allow multiple inserts
                             intent2.setAction(Intent.ACTION_GET_CONTENT);
@@ -124,18 +125,6 @@ public class NewItemActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_new_item, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -180,10 +180,6 @@ public class ItemFragment extends Fragment implements LoaderManager.LoaderCallba
                     ((MainActivity)getActivity()).deleteSelectedItems(mGridView.getCheckedItemIds());
                     mode.finish(); // Action picked, so close the CAB
                     return true;
-                case R.id.menu_edit:
-                    ((MainActivity)getActivity()).editSelectedItem(selectedId);
-                    mode.finish(); // Action picked, so close the CAB
-                    return true;
                 default:
                     return false;
             }
