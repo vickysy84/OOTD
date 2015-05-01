@@ -23,6 +23,7 @@ import com.vickysy.ootd.data.OOTDContract;
 /**
  * A fragment representing a list of Items.
  * interface.
+ * Created by vickysy on 3/10/15.
  */
 public class ItemFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     public static final String LOG_TAG = ItemFragment.class.getSimpleName();

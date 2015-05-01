@@ -13,7 +13,10 @@ import com.vickysy.ootd.utils.camera.PhotoUtility;
 
 import java.io.IOException;
 
-
+/**
+ * The New Item activity (home screen) of the OOTD App.
+ * Created by vickysy on 3/10/15.
+ */
 public class NewItemActivity extends ActionBarActivity {
     static final int REQUEST_IMAGE_CAPTURE = 2;
     static final int REQUEST_IMAGE_GALLERY = 3;

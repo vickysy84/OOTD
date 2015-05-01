@@ -15,6 +15,7 @@ import android.net.Uri;
 import java.util.ArrayList;
 
 /**
+ * Content Provider for OOTD database
  * Created by vickysy on 3/10/15.
  */
 public class OOTDProvider extends ContentProvider {

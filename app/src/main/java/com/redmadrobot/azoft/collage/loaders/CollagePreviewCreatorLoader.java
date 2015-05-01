@@ -24,6 +24,9 @@ import java.util.Map;
  * Time: 6:19 PM
  *
  * @author MiG35
+ *
+ * Note: Edited to include OOTD App logo
+ * @author vickysy
  */
 public class CollagePreviewCreatorLoader extends DataAsyncTaskLibLoader<String> {
 
@@ -57,6 +60,10 @@ public class CollagePreviewCreatorLoader extends DataAsyncTaskLibLoader<String> 
             for (final Map.Entry<CollageRegion, CollageRegionData> entryItem : collageDataMap.entrySet()) {
                 drawCollageRegionOnCanvas(canvas, entryItem.getKey(), entryItem.getValue());
             }
+
+            //draw logo
+            drawLogo(canvas);
+
             return MediaUtils.insertImage(outBitmap, getContext().getString(R.string.text_image_collage_preview));
         }
         catch (final Throwable throwable) {
@@ -67,6 +74,13 @@ public class CollagePreviewCreatorLoader extends DataAsyncTaskLibLoader<String> 
                 outBitmap.recycle();
             }
         }
+    }
+
+    private void drawLogo(final Canvas canvas) throws CollageCreationException {
+        Bitmap icon = BitmapFactory.decodeResource(getContext().getResources(),
+                R.drawable.ic_logo_collage);
+
+        canvas.drawBitmap(icon, 5, 5, null);
     }
 
     private void drawCollageRegionOnCanvas(final Canvas canvas, final CollageRegion collageRegion, final CollageRegionData collageRegionData)

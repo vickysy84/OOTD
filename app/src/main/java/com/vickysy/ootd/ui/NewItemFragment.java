@@ -38,6 +38,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
  * A simple {@link Fragment} subclass.
  * Use the {@link NewItemFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * Created by vickysy on 3/10/15.
  */
 public class NewItemFragment extends Fragment implements PopupMenu.OnMenuItemClickListener, View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>{
 

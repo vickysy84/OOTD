@@ -4,6 +4,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 /**
+ * UI Utilities for OOTD App
  * Created by vickysy on 3/12/15.
  */
 public class UIUtilities {

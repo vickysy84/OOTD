@@ -106,7 +106,7 @@ public final class SimpleCollageGenerator implements CollageFactory {
             collageRegions.add(new CollageRegion(regionId++, 0.33, 0.66d, 0.64d, 0.99));
             collageRegions.add(new CollageRegion(regionId++, 0.66d, 0.01, 0.99, 0.31d));
             collageRegions.add(new CollageRegion(regionId++, 0.66d, 0.33d, 0.99, 0.64));
-            collageRegions.add(new CollageRegion(regionId, 0.66d, 0.66d, 0.99, 0.99));
+            collageRegions.add(new CollageRegion(regionId++, 0.66d, 0.66d, 0.99, 0.99));
         }
 		return new Collage(collageRegions);
 	}

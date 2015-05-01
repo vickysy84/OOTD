@@ -6,6 +6,9 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
+ * Defines table and column names for the OOTDContract database.
+ *
+ * Note: outfit and outfit_item tables not yet used as of 05/01/2015
  * Created by vickysy on 3/10/15.
  */
 public class OOTDContract {

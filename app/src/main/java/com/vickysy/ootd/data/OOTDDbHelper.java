@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.vickysy.ootd.data.OOTDContract.ItemEntry;
 
 /**
- *
+ * Manages a local database for OOTD data.
  * Created by vickysy on 3/10/15.
  */
 public class OOTDDbHelper extends SQLiteOpenHelper {

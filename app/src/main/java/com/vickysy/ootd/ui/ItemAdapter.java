@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.vickysy.ootd.R;
 
 /**
+ * Cursor Adapter for loading items in main view.
  * Created by vickysy on 3/10/15.
  */
 public class ItemAdapter extends CursorAdapter {

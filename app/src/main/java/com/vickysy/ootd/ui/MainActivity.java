@@ -32,7 +32,10 @@ import java.io.IOException;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-
+/**
+ * The Main activity (home screen) of the OOTD App.
+ * Created by vickysy on 3/10/15.
+ */
 public class MainActivity extends ActionBarActivity implements ItemFragment.Callback{
 
     private static final int NEW_ITEM = 0;
@@ -100,7 +103,7 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
             else {
                 //get the values selected
                 ItemTask it = new ItemTask(MainActivity.this);
-                Collage collage = COLLAGE_FACTORY.getCollage(mGridView.getCheckedItemIds().length - 1);
+                Collage collage = COLLAGE_FACTORY.getCollage(mGridView.getCheckedItemIds().length -1);
                 mCollageFillData = new CollageFillData(collage);
                 Cursor cursor = it.getItems(mGridView.getCheckedItemIds());
                 cursor.moveToPosition(-1);
