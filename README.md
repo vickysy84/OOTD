@@ -16,7 +16,7 @@ Please refer to https://drive.google.com/drive/folders/0Bzh5T703iSz6dFB3V0UxRFhY
 
 External Libraries:
 Floating Action Button
-https://github.com/Clans/FloatingActionButton/tree/master/sample/src/main/java/com/github/clans/fab/sample
+https://github.com/Clans/FloatingActionButton
 Crouton
 https://github.com/keyboardsurfer/Crouton
 Azoft Collage Maker
