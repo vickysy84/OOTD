@@ -11,6 +11,10 @@ Min. SDK version: 15
 
 Target SDK version: 21
 
+## Self Evaluation
+
+Please refer to: https://docs.google.com/document/d/1hkcDHHu8jQ0eg5CdTlLxYngff2osL0eOK414kpbVTzo/edit#heading=h.tjo88txm2yyk or http://bit.ly/1Aqeedp
+
 ## Screen Shots
 
 Note: _land are mockups for landscape mode and _sw600dp are mockups for tablet.
