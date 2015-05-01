@@ -1,7 +1,7 @@
 # OOTD
 A fashion closet application that allows the user to organize his/her fashion items and create outfits to share with friends. It allows the user to add, edit, delete, and view their fashion items to keep track of details regarding their item type, brand, condition, color, and material.
 
-Access to the app apk: https://drive.google.com/file/d/0Bzh5T703iSz6VkluWGpOY3BMeE0/view?usp=sharing
+Access to the app apk: https://drive.google.com/file/d/0Bzh5T703iSz6WFJKNjZDSHcwRmc/view?usp=sharing
 
 Package: com.vickysy.ootd
 
