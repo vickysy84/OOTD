@@ -17,7 +17,7 @@ Note: _land are mockups for landscape mode and _sw600dp are mockups for tablet.
 
 Please refer to https://drive.google.com/drive/folders/0Bzh5T703iSz6dFB3V0UxRFhYOVk or http://bit.ly/1P0zjli
 
-## External Libraries:
+## External Libraries
 
 Floating Action Button
 
