@@ -31,7 +31,7 @@
     <string name="action_picture">Picture</string>
     <string name="title_activity_new_outfit">New Outfit</string>
     <string name="title_collage_preview">Preview</string>
-    <string name="title_collage_builder">Outfit Collage editor</string>
+    <string name="title_collage_builder">Outfit Collage Editor</string>
     <string name="text_image_collage_preview">collageimage.png</string>
     <string name="text_email_subject">Collage</string>
     <string name="text_share_collage">Share</string>
@@ -48,4 +48,6 @@
     <string name="error_disk_error">No preview available. Problems in disk writing. Maybe it is full.</string>
     <string name="button_enter">Enter</string>
     <string name="button_ok">Ok</string>
+
+    <string name="num_columns">3</string>
 </resources>

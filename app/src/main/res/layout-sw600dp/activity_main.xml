@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="vertical"
+    tools:context="com.vickysy.ootd.ui.MainActivity">
+
+    <!--
+    This layout is a two-pane layout for the Items master/detail flow.
+    -->
+    <FrameLayout
+        android:id="@+id/fragment_new_item"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30" />
+
+    <fragment
+        android:id="@+id/fragment_item"
+        android:name="com.vickysy.ootd.ui.ItemFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:layout="@android:layout/list_content"
+        android:layout_weight="70"/>
+
+
+
+</LinearLayout>

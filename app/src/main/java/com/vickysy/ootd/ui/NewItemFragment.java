@@ -240,8 +240,14 @@ public class NewItemFragment extends Fragment implements PopupMenu.OnMenuItemCli
         switch (action) {
             case NEW_ITEM: submitButton.setText("Submit");
                 mImageView.setImageBitmap(mImageBitmap);
+                if (frameTitleView != null){
+                    frameTitleView.setText("New Item");
+                }
                 break;
             case EDIT_ITEM: submitButton.setText("Save");
+                if (frameTitleView != null){
+                    frameTitleView.setText("Edit Item");
+                }
                 break;
         }
 

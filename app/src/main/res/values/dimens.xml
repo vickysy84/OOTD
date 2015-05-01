@@ -11,5 +11,6 @@
     <dimen name="image_height">120dp</dimen>
     <dimen name="new_item_image_width">200dp</dimen>
     <dimen name="new_item_image_height">200dp</dimen>
+    <dimen name="space_width">50dp</dimen>
 
 </resources>

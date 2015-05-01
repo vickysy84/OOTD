@@ -1,7 +1,6 @@
 package com.vickysy.ootd.ui;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -69,7 +68,6 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
         setContentView(R.layout.activity_main);
         if (findViewById(R.id.fragment_new_item) != null) {
             mTwoPane = true;
-            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             if (savedInstanceState == null) {
                 NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, true);
                     getSupportFragmentManager().beginTransaction()
