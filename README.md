@@ -29,7 +29,7 @@ https://github.com/keyboardsurfer/Crouton
 
 Azoft Collage Maker
 
-http://github.com/Azoft/CollageMaker-Android/tree/master/Azoft-Collage
+http://github.com/Azoft/CollageMaker-Android
 
 Square Picasso, Okhttp, and Retrofit
 
