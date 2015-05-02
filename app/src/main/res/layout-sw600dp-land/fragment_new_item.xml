@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:useDefaultMargins="true"
+    android:alignmentMode="alignBounds"
+    android:columnOrderPreserved="false"
+
+    android:columnCount="5"
+    >
+
+    <TextView
+        android:text="New Item"
+        android:textSize="32dip"
+        android:id="@+id/frame_title_view"
+        android:layout_columnSpan="5"
+        android:layout_gravity="center_horizontal"
+        android:layout_row="0"
+        android:layout_column="0" />
+
+
+    <Space
+        android:layout_width="200px"
+        android:layout_height="20px"
+        android:layout_row="1"
+        android:layout_column="0" />
+
+    <ImageView
+        android:layout_width="@dimen/new_item_image_width"
+        android:layout_height="@dimen/new_item_image_width"
+        android:id="@+id/imageView"
+        android:layout_row="1"
+        android:layout_column="1"
+        android:layout_columnSpan="2"
+        android:visibility="visible"
+        android:adjustViewBounds="true"
+        android:minHeight="300dp"
+        android:maxHeight="300dp"
+        android:background="@drawable/click_here"/>
+
+    <Space
+        android:layout_width="300px"
+        android:layout_height="20px"
+        android:layout_row="2"
+        android:layout_column="0" />
+
+    <TextView
+        android:text="Item Type:"
+        android:width="100dp"
+        android:layout_gravity="right"
+        android:layout_row="2"
+        android:layout_column="1" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_type_spinner"
+        android:layout_row="2"
+        android:layout_column="2" />
+
+    <Space
+        android:layout_width="200px"
+        android:layout_height="20px"
+        android:layout_row="3"
+        android:layout_column="0" />
+
+    <TextView
+        android:text="Brand:"
+        android:width="100dp"
+        android:layout_column="1"
+        android:layout_gravity="right"
+        android:layout_row="3" />
+
+    <EditText
+        android:ems="8"
+        android:id="@+id/brand_text"
+        android:layout_row="3"
+        android:layout_column="2" />
+
+    <Space
+        android:layout_width="120px"
+        android:layout_height="20px"
+        android:layout_row="4"
+        android:layout_column="0" />
+
+    <TextView
+        android:text="Condition:"
+        android:width="100dp"
+        android:layout_column="1"
+        android:layout_gravity="right"
+        android:layout_row="4" />
+
+    <EditText
+        android:id="@+id/condition_text"
+        android:ems="8"
+        android:layout_row="4"
+        android:layout_column="2" />
+
+    <Space
+        android:layout_width="120px"
+        android:layout_height="20px"
+        android:layout_row="5"
+        android:layout_column="0" />
+
+    <TextView
+        android:text="Color:"
+        android:width="100dp"
+        android:layout_column="1"
+        android:layout_gravity="right"
+        android:layout_row="5" />
+
+    <EditText
+        android:id="@+id/color_text"
+        android:ems="8"
+        android:layout_row="5"
+        android:layout_column="2" />
+
+    <Space
+        android:layout_width="120px"
+        android:layout_height="20px"
+        android:layout_row="6"
+        android:layout_column="0" />
+
+    <TextView
+        android:text="Material:"
+        android:width="100dp"
+        android:layout_column="1"
+        android:layout_gravity="right"
+        android:layout_row="6" />
+
+    <EditText
+        android:id="@+id/material_text"
+        android:ems="8"
+        android:layout_row="6"
+        android:layout_column="2" />
+
+    <Button
+        android:text="Submit"
+        android:layout_row="9"
+        android:layout_column="4"
+        android:id="@+id/submit"
+        />
+</GridLayout>
+</ScrollView>

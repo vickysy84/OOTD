@@ -7,6 +7,7 @@
         android:required="true" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -52,7 +53,8 @@
 
         <activity
             android:name="com.redmadrobot.azoft.collage.ui.activities.CollagePreviewActivity"
-            android:label="@string/title_collage_preview">
+            android:label="@string/title_collage_preview"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.redmadrobot.azoft.collage.ui.activities.CollageBuilderActivity" />
