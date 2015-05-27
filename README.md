@@ -1,5 +1,5 @@
 # OOTD
-A fashion closet application that allows the user to organize his/her fashion items and create an outfit collage to share with friends. It allows the user to add, edit, delete, and view their fashion items to keep track of details regarding their item type, brand, condition, color, and material. The user can also select up to 9 items in the main activity grid view to create an outfit collage that can be shared to his/her friends.
+A fashion closet application that allows the user to organize his/her fashion items and create an outfit collage to share with friends. It allows the user to add, edit, delete, and view their fashion items to keep track of details regarding their item type, brand, condition, color, and material. The user can also select up to 9 items in the main activity grid view to create an outfit collage. In the collage preview, the user can drag the images to adjust the collage for the final collage bitmap to be created that can be shared to his/her friends.
 
 Access to the app apk: https://drive.google.com/file/d/0Bzh5T703iSz6VGEySjBEQjB4WFk/view?usp=sharing
 
