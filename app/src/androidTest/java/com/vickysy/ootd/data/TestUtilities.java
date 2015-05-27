@@ -38,18 +38,6 @@ public class TestUtilities extends AndroidTestCase {
         }
     }
 
-    /*
-        Students: Use this to create some default item values for your database tests.
-     */
-//    static ContentValues createItemValues(long itemRowId) {
-//        ContentValues itemValues = new ContentValues();
-//        itemValues.put(OOTDContract.ItemEntry._ID, itemRowId);
-//        itemValues.put(OOTDContract.ItemEntry.COLUMN_ITEM_TYPE, TEST_ITEM_TYPE);
-//        itemValues.put(OOTDContract.ItemEntry.COLUMN_IMG_PATH, "test");
-//
-//        return itemValues;
-//    }
-
 
     static ContentValues createItemDressValues() {
         // Create a new map of values, where column names are the keys

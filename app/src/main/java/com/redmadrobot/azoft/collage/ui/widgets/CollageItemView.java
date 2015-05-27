@@ -25,6 +25,10 @@ import com.vickysy.ootd.R;
  * Time: 5:24 PM
  *
  * @author MiG35
+ *
+ * 05/24/2014
+ * added drag and drop event to allow switching of images in the collage.
+ * @author vickysy
  */
 @SuppressWarnings("UnusedDeclaration")
 public class CollageItemView extends ImageView {
