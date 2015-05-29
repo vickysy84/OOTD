@@ -24,11 +24,26 @@ Please refer to https://drive.google.com/drive/folders/0Bzh5T703iSz6dFB3V0UxRFhY
 Main View
 ![ScreenShot](/../screenshots/screenshots/001_main_view.png?raw=true =250x)
 
+New Item Change Image
+![ScreenShot](/../screenshots/screenshots/002_new_item_change_image.png?raw=true =250x)
+
+Add New Item
+![ScreenShot](/../screenshots/screenshots/003_add_new_item.png?raw=true =250x)
+
+Edit New Item
+![ScreenShot](/../screenshots/screenshots/007_edit_new_item_filled.png?raw=true =250x)
+
 Error creating collage, select 1 to 9 items.
 ![ScreenShot](/../screenshots/screenshots/009_error_select_1_to_9.png?raw=true =250x)
 
 Create Collage Preview
 ![ScreenShot](/../screenshots/screenshots/010_create_collage.png?raw=true =250x)
+
+Create Collage Preview Edit Adjust Image
+![ScreenShot](/../screenshots/screenshots/012_adjust_image.png?raw=true =250x)
+
+Share Collage
+![ScreenShot](/../screenshots/screenshots/011_collage_preview_share.png?raw=true =250x)
 
 ## External Libraries/ References
 
