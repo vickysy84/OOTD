@@ -20,6 +20,7 @@ Please refer to: https://docs.google.com/document/d/1hkcDHHu8jQ0eg5CdTlLxYngff2o
 Note: _land are mockups for landscape mode and _sw600dp are mockups for tablet.
 
 Please refer to https://drive.google.com/drive/folders/0Bzh5T703iSz6dFB3V0UxRFhYOVk or http://bit.ly/1P0zjli
+![Alt text](/../screenshots/screenshots/001_main_view.png?raw=true "Main View")
 
 ## External Libraries/ References
 
