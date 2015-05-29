@@ -21,31 +21,31 @@ Note: _land are mockups for landscape mode and _sw600dp are mockups for tablet.
 
 Please refer to https://drive.google.com/drive/folders/0Bzh5T703iSz6dFB3V0UxRFhYOVk or http://bit.ly/1P0zjli
 
-Main View
+###Main View
 <img src="/../screenshots/screenshots/001_main_view.png?raw=true" alt="alt text" width="300px">
 
-Add New Item
+###Add New Item
 <img src="/../screenshots/screenshots/003_add_new_item.png?raw=true" alt="alt text" width="300px">
 
-New Item Change Image
+###New Item Change Image
 <img src="/../screenshots/screenshots/002_new_item_change_image.png?raw=true" alt="alt text" width="300px">
 
-Edit New Item
+###Edit New Item
 <img src="/../screenshots/screenshots/007_edit_item_filled.png?raw=true" alt="alt text" width="300px">
 
-Error creating collage when you don't select 1 to 9 items on floating action button click
+###Error creating collage when you don't select 1 to 9 items on floating action button click
 <img src="/../screenshots/screenshots/009_error_select_1_to_9.png?raw=true" alt="alt text" width="300px">
 
-Create Collage Preview
+###Create Collage Preview
 <img src="/../screenshots/screenshots/010_create_collage.png?raw=true" alt="alt text" width="300px">
 
-Create Collage Preview Edit Adjust Image
+###Create Collage Preview Edit Adjust Image
 <img src="/../screenshots/screenshots/012_adjustimage_notcentered.png?raw=true" alt="alt text" width="300px">
 
-Create Collage Preview Adjusted Image
+###Create Collage Preview Adjusted Image
 <img src="/../screenshots/screenshots/012_adjustedimage.png?raw=true" alt="alt text" width="300px">
 
-Share Collage
+###Share Collage
 <img src="/../screenshots/screenshots/011_collage_preview_share.png?raw=true" alt="alt text" width="300px">
 
 ## External Libraries/ References
