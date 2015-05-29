@@ -23,7 +23,7 @@ Please refer to https://drive.google.com/drive/folders/0Bzh5T703iSz6dFB3V0UxRFhY
 
 Main View
 ![ScreenShot](/../screenshots/screenshots/001_main_view.png?raw=true =250x)
-<img src="/../screenshots/screenshots/001_main_view.png?raw=true" alt="alt text" style="width:300px">
+<img src="/../screenshots/screenshots/001_main_view.png?raw=true" alt="alt text" width="300px">
 
 New Item Change Image
 ![ScreenShot](/../screenshots/screenshots/002_new_item_change_image.png?raw=true =250x)
