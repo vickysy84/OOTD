@@ -15,11 +15,13 @@ Target SDK version: 21
 
 Please refer to: https://docs.google.com/document/d/1hkcDHHu8jQ0eg5CdTlLxYngff2osL0eOK414kpbVTzo/edit#heading=h.tjo88txm2yyk or http://bit.ly/1Aqeedp
 
-## Screen Shots
+## Screen Shots/ Mock ups
 
 Note: _land are mockups for landscape mode and _sw600dp are mockups for tablet.
 
 Please refer to https://drive.google.com/drive/folders/0Bzh5T703iSz6dFB3V0UxRFhYOVk or http://bit.ly/1P0zjli
+
+![alt tag](https://drive.google.com/thumbnail?id=0Bzh5T703iSz6anUzY1hhOV9iWVE&authuser=0&v=1430194874595&sz=w1196-h468 "Main Page")
 
 ## External Libraries/ References
 
