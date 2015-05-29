@@ -1,6 +1,7 @@
 package com.vickysy.ootd.ui;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,9 @@ import com.vickysy.ootd.R;
 import com.vickysy.ootd.utils.camera.PhotoUtility;
 
 import java.io.IOException;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
  * The New Item activity (home screen) of the OOTD App.
@@ -52,15 +56,21 @@ public class NewItemActivity extends ActionBarActivity {
                     switch (from) {
                         // call camera intent
                         case MainActivity.FROM_CAMERA:
+                            PackageManager pm = this.getPackageManager();
+
+                            if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
                                 if (PhotoUtility.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE)) {
                                     dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
                                 } else {
                                     //log error
-                                    NewItemFragment fragment = NewItemFragment.newInstance(mode, id, false);
-                                    getSupportFragmentManager().beginTransaction()
-                                            .add(R.id.fragment_new_item, fragment)
-                                            .commit();
+                                    Crouton.makeText(this, "No camera intent available.", Style.ALERT).show();
+
                                 }
+                            } else {
+                                //log error
+                                Crouton.makeText(this, "No camera available.", Style.ALERT).show();
+
+                            }
                             break;
                         case MainActivity.FROM_GALLERY:
                             Intent intent2 = new Intent();

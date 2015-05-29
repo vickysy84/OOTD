@@ -1,6 +1,7 @@
 package com.vickysy.ootd.ui;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -147,13 +148,21 @@ public class MainActivity extends ActionBarActivity implements ItemFragment.Call
 
                 if (mTwoPane) {
                     //dispatch camera
-                    if (PhotoUtility.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE)) {
-                        dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
+                    PackageManager pm = this.getPackageManager();
+
+                    if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+
+                        if (PhotoUtility.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE)) {
+                            dispatchTakePictureIntent(REQUEST_IMAGE_CAPTURE);
+                        } else {
+                            //log error
+                            Crouton.makeText(this, "No camera intent available.", Style.ALERT).show();
+
+                        }
                     } else {
-                        NewItemFragment fragment = NewItemFragment.newInstance(NEW_ITEM, 0, true);
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_new_item, fragment, DETAILFRAGMENT_TAG)
-                                .commit();
+                        //log error
+                        Crouton.makeText(this, "No camera available.", Style.ALERT).show();
+
                     }
                 } else {
                     Intent intent = new Intent(this, NewItemActivity.class);
