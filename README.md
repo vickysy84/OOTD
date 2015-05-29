@@ -31,7 +31,7 @@ Add New Item
 ![ScreenShot](/../screenshots/screenshots/003_add_new_item.png?raw=true =250x)
 
 Edit New Item
-![ScreenShot](/../screenshots/screenshots/007_edit_new_item_filled.png?raw=true =250x)
+![ScreenShot](/../screenshots/screenshots/007_edit_item_filled.png?raw=true =250x)
 
 Error creating collage, select 1 to 9 items.
 ![ScreenShot](/../screenshots/screenshots/009_error_select_1_to_9.png?raw=true =250x)
