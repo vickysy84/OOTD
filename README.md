@@ -43,7 +43,7 @@ Create Collage Preview Edit Adjust Image
 ![ScreenShot](/../screenshots/screenshots/012_adjustimage_notcentered.png?raw=true =250x)
 
 Create Collage Preview Adjusted Image
-![ScreenShot](/../screenshots/screenshots/012_adjustimage.png?raw=true =250x)
+![ScreenShot](/../screenshots/screenshots/012_adjustedimage.png?raw=true =250x)
 
 Share Collage
 ![ScreenShot](/../screenshots/screenshots/011_collage_preview_share.png?raw=true =250x)
