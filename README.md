@@ -42,7 +42,7 @@ Please refer to https://drive.google.com/drive/folders/0Bzh5T703iSz6dFB3V0UxRFhY
 ###Create Collage Preview Edit Adjust Image
 <img src="/../screenshots/screenshots/012_adjustimage_notcentered.png?raw=true" alt="alt text" width="300px">
 
-###Create Collage Preview Adjusted Image
+###Create Collage Preview Adjusted Image - drag the image to the desired location.
 <img src="/../screenshots/screenshots/012_adjustedimage.png?raw=true" alt="alt text" width="300px">
 
 ###Share Collage
